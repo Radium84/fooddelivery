@@ -10,9 +10,6 @@
     <groupId>ru.sberbank.edu</groupId>
     <artifactId>fooddelivery</artifactId>
     <version>1.0-SNAPSHOT</version>
-
-    <packaging>pom</packaging>
-
     <name>fooddelivery</name>
 
     <properties>
@@ -42,10 +39,11 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>RELEASE</version>
-            <scope>compile</scope>
+            <version>1.18.30</version>
+            <scope>provided</scope>
         </dependency>
-<!--        Testing-->
+
+        <!--        Testing-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
