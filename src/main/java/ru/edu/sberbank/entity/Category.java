@@ -1,11 +1,15 @@
 package ru.edu.sberbank.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "categories")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Category {
 
     @Id
@@ -17,7 +21,5 @@ public class Category {
 
     @Column(name = "description")
     private String description;
-
-
 
 }

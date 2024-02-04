@@ -24,6 +24,6 @@ public class OrderItem {
     private Integer quantity;
 
     @Column(name = "price", nullable = false)
-    private Integer price;
+    private Double price;
 
 }
