@@ -1,0 +1,52 @@
+.header {
+  font-family: "Montserrat";
+  padding: 4.5rem 0;
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__logo {
+    background-image: url("../../assets/images/page/Logo.png");
+    width: 17rem;
+    height: 3rem;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  .nav {
+    display: flex;
+    width: 50%;
+    justify-content: space-between;
+
+    &__item {
+      color: #fff;
+      font-size: 1.4rem;
+      line-height: 2.8rem;
+    }
+  }
+
+  .header__userPanel {
+    display: flex;
+  }
+  .header__user-panel {
+    display: flex;
+  }
+  .user-panel {
+    display: flex;
+  }
+  .user-icon {
+    width: 5rem;
+    height: 5rem;
+    cursor: pointer;
+  }
+  .search-icon {
+    background-image: url('../../assets/images/icons/search-icon.png');
+  }
+  .user-icon {
+
+  }
+  .cart-icon {
+  }
+}

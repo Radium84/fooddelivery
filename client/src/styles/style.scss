@@ -1,0 +1,17 @@
+@import "./fonts/fonts.scss";
+
+* {
+  font-size: 62.5%;
+  background-color: #0f0f11;
+}
+
+.container {
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.app {
+  background-color: aquamarine;
+  font-size: 5rem;
+  font-family: "Montserrat";
+}
