@@ -9,7 +9,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderDTO {
-    Long OurUserID;
-    HashMap<Long, Integer> productQuantity;
+public class OrderRequestDTO {
+    private Long ourUsersId;
+    private HashMap<Long, Integer> productQuantity;
 }

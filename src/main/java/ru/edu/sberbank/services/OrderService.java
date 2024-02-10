@@ -1,17 +1,15 @@
 package ru.edu.sberbank.services;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.edu.sberbank.entity.Order;
 import ru.edu.sberbank.entity.OrderItem;
 import ru.edu.sberbank.entity.OurUser;
 import ru.edu.sberbank.entity.Product;
-import ru.edu.sberbank.entity.dto.OrderDTO;
+import ru.edu.sberbank.entity.dto.OrderRequestDTO;
 import ru.edu.sberbank.entity.dto.OrderResponseDTO;
-import ru.edu.sberbank.entity.dto.ProductDTO;
 import ru.edu.sberbank.repository.OrderItemRepository;
 import ru.edu.sberbank.repository.OrderRepository;
 import ru.edu.sberbank.repository.OurUserRepository;
@@ -31,7 +29,7 @@ public class OrderService {
 
 
     public OrderService(OrderRepository orderRepository, OrderItemRepository orderItemRepository,
-                        ProductRepository productRepository,ProductService productService,
+                        ProductRepository productRepository, ProductService productService,
                         OurUserRepository ourUserRepository) {
         this.orderRepository = orderRepository;
         this.orderItemRepository = orderItemRepository;
@@ -43,39 +41,27 @@ public class OrderService {
 
 
     @Transactional
-    public List<Order> getAllOrders() {
-        return orderRepository.findAll();
-    }
-    @Transactional
-    public Optional<Order> getOrderById(Long orderId) {
-        return orderRepository.findById(orderId);
+    public List<OrderResponseDTO> getAllOrders() {
+        List<Order> orders = orderRepository.findAll();
+        return orders.stream().map(this::convertToOrderResponseDTO).toList();
     }
 
-    public OrderResponseDTO updateOrder(OrderDTO cartItemDTO) {
+    @Transactional
+    public Optional<OrderResponseDTO> getOrderById(Long orderId) {
+        return orderRepository.findById(orderId)
+                .map(this::convertToOrderResponseDTO);
+    }
+
+    public OrderResponseDTO updateOrder(OrderRequestDTO cartItemDTO) {
         Order order = createOrderFromDTO(cartItemDTO);
-        OrderResponseDTO dto = new OrderResponseDTO();
-
-        dto.setOrderId(order.getId()); // Устанавливаем ID заказа
-        dto.setOurUserID(order.getUser().getId()); // Устанавливаем ID пользователя
-        dto.setTotalPrice(order.getTotalPrice()); // Устанавливаем общую цену
-
-        // Инициализируем мапу для хранения товаров и их цен с учетом скидки
-        HashMap<Long, Double> productsWithDiscount = new HashMap<>();
-
-        // Перебираем элементы заказа и заполняем мапу
-        for (OrderItem orderItem : order.getOrderItems()) {
-            productsWithDiscount.put(orderItem.getProduct().getId(), orderItem.getPrice());
-        }
-
-        dto.setProductWithDiscount(productsWithDiscount); // Устанавливаем мапу
-
-        return dto; // Возвращаем DTO
+        return convertToOrderResponseDTO(order);
     }
+
     @Transactional
-    public Order createOrderFromDTO(OrderDTO orderDTO) {
+    public Order createOrderFromDTO(OrderRequestDTO orderRequestDTO) {
         // Поиск пользователя
-        OurUser user = ourUserRepository.findById(orderDTO.getOurUserID()).orElseThrow(
-                () -> new RuntimeException("User not found"));
+        OurUser user = ourUserRepository.findById(orderRequestDTO.getOurUsersId()).orElseThrow(
+                () -> new EntityNotFoundException("User not found"));
 
         // Создание нового заказа
         Order order = new Order();
@@ -84,9 +70,9 @@ public class OrderService {
         double totalOrderPrice = 0;
         List<OrderItem> orderItems = new ArrayList<>();
         // Создание элементов заказа и вычисление итоговой суммы
-        for (Map.Entry<Long, Integer> entry : orderDTO.getProductQuantity().entrySet()) {
+        for (Map.Entry<Long, Integer> entry : orderRequestDTO.getProductQuantity().entrySet()) {
             Product product = productRepository.findById(entry.getKey()).orElseThrow(
-                    () -> new RuntimeException("Product not found"));
+                    () -> new EntityNotFoundException("Product not found"));
             OrderItem orderItem = new OrderItem();
             orderItem.setOrder(order);
             orderItem.setProduct(product);
@@ -106,6 +92,7 @@ public class OrderService {
         order.setTotalPrice(totalOrderPrice);
 
         // Сохранение заказа в базе данных
+        order.setOrderItems(orderItems);
         Order savedOrder = orderRepository.save(order);
 
         // Связывание каждого элемента заказа с сохраненным заказом и сохранение их в базу данных
@@ -115,9 +102,23 @@ public class OrderService {
         return savedOrder;
     }
 
-    private Double calculateDiscountedPrice(Product product){
+    private Double calculateDiscountedPrice(Product product) {
         double discountRate = product.getIsDiscount() ? product.getDiscount().getValue() : 0.0;
         double originalPrice = product.getPrice();
         return originalPrice - (originalPrice * (discountRate / 100.0));
+    }
+    private OrderResponseDTO convertToOrderResponseDTO(Order order) {
+        OrderResponseDTO dto = new OrderResponseDTO();
+        dto.setOurUserId(order.getUser().getId());
+        dto.setTotalPrice(order.getTotalPrice());
+        dto.setOrderId(order.getId());
+
+        HashMap<Long, Double> productsWithDiscount = new HashMap<>();
+        for (OrderItem orderItem : order.getOrderItems()) {
+            productsWithDiscount.put(orderItem.getProduct().getId(), orderItem.getPrice() * orderItem.getQuantity());
+        }
+        dto.setProductWithDiscount(productsWithDiscount);
+
+        return dto;
     }
 }

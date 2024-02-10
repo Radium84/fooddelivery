@@ -10,9 +10,9 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderResponseDTO {
-    Long OurUserID;
-    HashMap<Long, Double> productWithDiscount;
-    Long orderId;
-    Double totalPrice;
+    private Long OurUserId;
+    private HashMap<Long, Double> productWithDiscount;
+    private Long orderId;
+    private Double totalPrice;
 
 }
