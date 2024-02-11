@@ -38,7 +38,7 @@ public class SecurityConfig {
                     auth.getPassword(),
                     auth.getRoles().stream()
                             .map(role -> new SimpleGrantedAuthority(role.getName()))
-                            .collect(Collectors.toList()));
+                            .toList());
         };
     }
 
@@ -47,13 +47,18 @@ public class SecurityConfig {
         http
                 .csrf((csrf) -> csrf.disable())
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers(HttpMethod.GET).hasAuthority("ROLE_USER")
-                        .requestMatchers(HttpMethod.POST).hasAuthority("ROLE_ADMIN")
-                        .requestMatchers(HttpMethod.PUT).hasAuthority("ROLE_ADMIN")
-                        .requestMatchers(HttpMethod.DELETE).hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/discounts", "/api/products","/api/categories").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/discounts/*", "/api/products/*","/api/categories/*").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/users/register").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/discounts", "/api/products","/api/categories").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/discounts/*", "/api/products/*","/api/categories/*").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/discounts/*", "/api/products/*","/api/categories/*").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/orders").hasAuthority("ROLE_USER")
+                        .requestMatchers(HttpMethod.GET, "/api/orders/*").hasAuthority("ROLE_USER")
+                        .requestMatchers(HttpMethod.GET, "/api/orders").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/users/*").hasAuthority("ROLE_USER")
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults());
-
         return http.build();
     }
 

@@ -1,7 +1,9 @@
 package ru.edu.sberbank.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 import java.util.List;
@@ -10,6 +12,8 @@ import java.util.List;
 @Entity
 @Table(name = "products")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product {
 
     @Id
@@ -39,7 +43,7 @@ public class Product {
     @JoinColumn(name = "discount_id")
     private Discount discount;
 
-    @ManyToMany(mappedBy = "favoriteProducts")
+    @ManyToMany(mappedBy = "favoriteProducts",fetch = FetchType.EAGER)
     private List<OurUser> usersWhoFavorited;
 
 

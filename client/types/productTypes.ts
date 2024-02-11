@@ -7,7 +7,12 @@ type TypeCategory = {
 type TypeProduct = {
   id: number;
   name: string;
-  iconSrc?: string;
+  categoryName: string;
+  composition: string;
+  description: string;
+  price: number;
+  discountName: string | null;
+  calculatedPrice: number;
 };
 
-export default TypeCategory;
+export {TypeCategory, TypeProduct};
