@@ -11,7 +11,7 @@ import ru.edu.sberbank.entity.Discount;
 public class ProductResponseDTO {
     private Long id;
     private String name;
-    private String categoryName;
+    private Long categoryId;
     private String composition;
     private String description;
     private Integer price;

@@ -53,8 +53,6 @@ public class DiscountController {
             Discount updatedDiscount = discountService.updateDiscount(id, discount);
             return ResponseEntity.ok(updatedDiscount);
         } catch (Exception e) {
-            // Использовать более конкретный тип исключения,
-            // если в updateDiscount выбрасывается конкретное исключение
             return ResponseEntity.notFound().build();
         }
     }
@@ -67,7 +65,6 @@ public class DiscountController {
         } catch (EmptyResultDataAccessException e) {
             return ResponseEntity.notFound().build();
         } catch (DataIntegrityViolationException e) {
-            // Если есть проблемы с целостностью данных (например, discount используется)
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }

@@ -16,10 +16,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import ru.edu.sberbank.entity.Auth;
 import ru.edu.sberbank.repository.AuthRepository;
 
-
-
-import java.util.stream.Collectors;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -47,12 +43,13 @@ public class SecurityConfig {
         http
                 .csrf((csrf) -> csrf.disable())
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers(HttpMethod.GET, "/api/discounts", "/api/products","/api/categories").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/discounts/*", "/api/products/*","/api/categories/*").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/login").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/discounts", "/api/products", "/api/categories").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/discounts/*", "/api/products/*", "/api/categories/*").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/users/register").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/discounts", "/api/products","/api/categories").hasAuthority("ROLE_ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/discounts/*", "/api/products/*","/api/categories/*").hasAuthority("ROLE_ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/discounts/*", "/api/products/*","/api/categories/*").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/discounts", "/api/products", "/api/categories").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/discounts/*", "/api/products/*", "/api/categories/*").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/discounts/*", "/api/products/*", "/api/categories/*").hasAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/orders").hasAuthority("ROLE_USER")
                         .requestMatchers(HttpMethod.GET, "/api/orders/*").hasAuthority("ROLE_USER")
                         .requestMatchers(HttpMethod.GET, "/api/orders").hasAuthority("ROLE_ADMIN")
