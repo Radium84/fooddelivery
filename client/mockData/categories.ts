@@ -6,7 +6,9 @@ const categories = [
     description: "bdbdbdb",
   },
   { id: 2, name: "Горячее", endpointName: "hot", description: "bdbdbdb" },
+
   { id: 3, name: "Холодное", endpointName: "cold", description: "bdbdbdb" },
+
   {
     id: 4,
     name: "Свежая выпечка",
