@@ -1,7 +1,7 @@
-import classes from "./button.module.scss";
+import "./button.scss";
 
 function Button() {
-  return <button className={classes.button}>fff</button>;
+  return <button className='button'>fff</button>;
 }
 
 export default Button;

@@ -3,6 +3,7 @@
 * {
   font-size: 62.5%;
   background-color: #0f0f11;
+  color: #fff;
 }
 
 .container {
@@ -14,4 +15,10 @@
   background-color: aquamarine;
   font-size: 5rem;
   font-family: "Montserrat";
+}
+
+@media (min-width: 600px) {
+  html {
+    font-size: 10px;
+  }
 }
