@@ -4,7 +4,6 @@ import jakarta.persistence.EntityNotFoundException;
 import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.edu.sberbank.entity.Category;
 import ru.edu.sberbank.entity.Discount;
 import ru.edu.sberbank.entity.Product;
 import ru.edu.sberbank.entity.dto.ProductRequestDTO;
@@ -46,16 +45,16 @@ public class ProductService {
         ProductResponseDTO productResponseDTO = new ProductResponseDTO();
         if (product.getIsDiscount()) {
             Optional<Discount> discountValue = discountService.getDiscountById(product.getDiscount().getId());
-            if (discountValue.isPresent()) {
-                productResponseDTO.setCalculatedPrice((100 - discountValue.get().getValue()) * product.getPrice() / 100);
-            } else {
-                productResponseDTO.setCalculatedPrice(product.getPrice());
-            }
+            discountValue.ifPresent(discount -> productResponseDTO.setCalculatedPrice((100 - discount.getValue()) * product.getPrice() / 100));
+
+        } else {
+            productResponseDTO.setCalculatedPrice(product.getPrice());
         }
         mapDTOToEntity(productResponseDTO, product);
         return productResponseDTO;
 
     }
+
     @Transactional
     public Product createProduct(ProductRequestDTO productReqDTO) {
         Product product = new Product();
@@ -91,9 +90,10 @@ public class ProductService {
             productResponseDTO.setDiscountName(product.getDiscount().getName());
         }
     }
+
     private void mapRequestToEntity(ProductRequestDTO productRequestDTO, Product product) {
         product.setName(productRequestDTO.getName());
-        var category =  categoryService.findCategoryById(productRequestDTO.getCategoryId());
+        var category = categoryService.findCategoryById(productRequestDTO.getCategoryId());
         category.ifPresent(product::setCategory);
         product.setComposition(productRequestDTO.getComposition());
         product.setDescription(productRequestDTO.getDescription());
