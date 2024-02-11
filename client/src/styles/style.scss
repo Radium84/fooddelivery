@@ -2,8 +2,14 @@
 
 * {
   font-size: 62.5%;
-  background-color: #0f0f11;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   color: #fff;
+}
+
+body {
+  background-color: #0f0f11;
 }
 
 .container {
@@ -12,9 +18,11 @@
 }
 
 .app {
-  background-color: aquamarine;
-  font-size: 5rem;
   font-family: "Montserrat";
+}
+
+.hidden {
+  display: none;
 }
 
 @media (min-width: 600px) {

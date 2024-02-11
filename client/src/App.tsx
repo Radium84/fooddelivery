@@ -14,6 +14,7 @@ function App() {
         <Suspense fallback={<div>loading...</div>}>
           <Routes>
             <Route path='/' element={<MainAsync />}></Route>
+            <Route path='/:categoryName' element={<MainAsync />}></Route>
             <Route path='/lk/:id' element={<PersonalAccountAsync />}></Route>
             <Route path='/:id/cart' element={<Cart />}></Route>
           </Routes>

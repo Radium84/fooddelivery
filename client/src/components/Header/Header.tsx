@@ -1,24 +1,17 @@
 import React, { useState } from "react";
 
-import { Link, useNavigate } from "react-router-dom";
-// import classes from "./header.module.scss";
+import { useNavigate } from "react-router-dom";
 import "./header.scss";
-import { useSelector } from "react-redux";
-import { RootState } from "src/redux/store";
-import { log } from "console";
-import PersonalAccount from "src/pages/Personal account/PersonalAccount";
-import { NavLink } from "react-router-dom";
+import { useAppSelector } from "../../redux/hooks/redux";
 
 function Header() {
   const navigate = useNavigate();
-  const categories = useSelector((state: RootState) => state.categories);
+  const { categories } = useAppSelector((state) => state.categories);
   const userId = 1;
   const headerNavigate = (path: string) => {
-    console.log("====================================");
-    console.log("hey");
-    console.log("====================================");
     navigate(path);
   };
+
   return (
     <header className='header'>
       <div className='container'>

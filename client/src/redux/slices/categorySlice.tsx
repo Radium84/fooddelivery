@@ -1,13 +1,21 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { categories } from "../../../mockData/categories";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import categories from "../../../mockData/categories";
+import { TCategoryList } from "types/productTypes";
 
-const initialState = categories;
+interface Categories {
+  categories: TCategoryList;
+}
+
+const initialState: Categories = {
+  categories: categories,
+};
 
 export const categorySlice = createSlice({
   name: "Categories",
   initialState,
   reducers: {
-    getCategories: (state) => {
+    getCategories: (state, action: PayloadAction<TCategoryList>) => {
+      state.categories = action.payload;
       return state;
     },
   },

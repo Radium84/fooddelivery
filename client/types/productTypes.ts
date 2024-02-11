@@ -1,18 +1,24 @@
-type TypeCategory = {
+type TCategory = {
   id: number;
   name: string;
-  iconSrc?: string;
+  endpointName: string;
+  description: string;
 };
 
-type TypeProduct = {
+type TCategoryList = TCategory[];
+
+type TProduct = {
   id: number;
   name: string;
-  categoryName: string;
+  categoryId: number;
   composition: string;
   description: string;
   price: number;
+  isDiscount: boolean;
   discountName: string | null;
   calculatedPrice: number;
 };
 
-export {TypeCategory, TypeProduct};
+type TProductList = TProduct[];
+
+export { TCategoryList, TProductList, TProduct, TCategory };
