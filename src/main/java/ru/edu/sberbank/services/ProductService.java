@@ -79,7 +79,7 @@ public class ProductService {
     private void mapDTOToEntity(ProductResponseDTO productResponseDTO, Product product) {
         productResponseDTO.setId(product.getId());
         productResponseDTO.setName(product.getName());
-        productResponseDTO.setCategoryName(product.getCategory().getName());
+        productResponseDTO.setCategoryId(product.getCategory().getId());
 
         productResponseDTO.setComposition(product.getComposition());
         productResponseDTO.setDescription(product.getDescription());
