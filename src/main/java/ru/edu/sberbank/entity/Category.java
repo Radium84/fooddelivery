@@ -22,4 +22,7 @@ public class Category {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "endpointName")
+    private String endpointName;
+
 }
