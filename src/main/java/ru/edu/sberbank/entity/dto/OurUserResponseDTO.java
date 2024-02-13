@@ -15,7 +15,7 @@ public class OurUserResponseDTO {
     private String lastname;
     private String address;
     private LocalDateTime birthday;
-    private List<String> favoriteProducts;
+    private List<Long> favoriteProducts;
     private String username;
 
 

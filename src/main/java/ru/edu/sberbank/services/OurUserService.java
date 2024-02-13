@@ -45,7 +45,6 @@ public class OurUserService {
         Auth auth = createAuth(userDTO.getUsername(), userDTO.getPassword());
 
         ourUser.setAuth(auth);
-
         return userRepository.save(ourUser);
     }
 
@@ -91,8 +90,8 @@ public class OurUserService {
             dto.setUsername(user.getAuth().getUsername());
         }
         if (user.getFavoriteProducts() != null) {
-            List<String> favoriteProductNames = user.getFavoriteProducts().stream()
-                    .map(Product::getName)
+            List<Long> favoriteProductNames = user.getFavoriteProducts().stream()
+                    .map(Product::getId)
                     .toList();
             dto.setFavoriteProducts(favoriteProductNames);
         }
