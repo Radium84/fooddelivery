@@ -14,10 +14,10 @@ type HeaderProps = {
 
 function Header({ onModal}: HeaderProps) {
   const navigate = useNavigate();
-  const { users } = useAppSelector((state) => state.users);
+  const { user } = useAppSelector((state) => state.user);
   const userId = 1;
-  const name = users.firstname;
-  const roleId = users.firstname
+  const name = user.firstname;
+  const roleId = user.firstname
   const headerNavigate = (path: string) => {
     navigate(path);
   };
@@ -33,7 +33,7 @@ function Header({ onModal}: HeaderProps) {
             {roleId ? (
               <div
                 className='user-lk'
-                onClick={() => headerNavigate(`/lk/${users.id}`)}>
+                onClick={() => headerNavigate(`/lk/${user.id}`)}>
                 {name}
               </div>
             ) : (

@@ -7,7 +7,7 @@ import usersReducer from "./slices/userSlice";
 const rootReducer = combineReducers({
   categories: categoriesReducer,
   products: productsReducer,
-  users: usersReducer,
+  user: usersReducer,
 });
 
 export const store = configureStore({

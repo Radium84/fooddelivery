@@ -2,10 +2,10 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { TUser, TUserSignIn } from "types/userTypes";
 
 interface User {
-  users: TUser | TUserSignIn;
+  user: TUser | TUserSignIn;
 }
 const initialState: User = {
-  users: {
+  user: {
     id: 2,
     firstname: "Марина",
     middlename: "Александровна",
@@ -28,19 +28,16 @@ const initialState: User = {
 };
 
 export const userSlice = createSlice({
-  name: "Users",
+  name: "User",
   initialState,
   reducers: {
     signInUser: (state, action: PayloadAction<TUserSignIn>) => {
-      state.users = action.payload;
-      console.log("====================================");
-      console.log("reducer");
-      console.log("====================================");
+      state.user = action.payload;
       return state;
     },
 
     signUpUser: (state, action: PayloadAction<TUserSignIn>) => {
-      state.users = action.payload;
+      state.user = action.payload;
       return state;
     },
   },
