@@ -3,7 +3,6 @@ package ru.edu.sberbank.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import ru.edu.sberbank.entity.Discount;
 import ru.edu.sberbank.entity.Product;
 import ru.edu.sberbank.entity.dto.ProductRequestDTO;
 import ru.edu.sberbank.entity.dto.ProductResponseDTO;
