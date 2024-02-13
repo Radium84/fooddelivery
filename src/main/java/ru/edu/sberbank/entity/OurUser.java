@@ -46,5 +46,4 @@ public class OurUser {
     @JoinColumn(name = "auth_id", referencedColumnName = "id")
     private Auth auth; // добавленное поле для связи с записью Auth
 
-
 }
