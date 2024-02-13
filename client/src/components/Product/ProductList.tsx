@@ -7,7 +7,6 @@ type ProductListProps = {
 };
 
 function ProductList({ productsList }: ProductListProps) {
-  console.log(productsList);
 
   return (
     <ul className='product-list'>

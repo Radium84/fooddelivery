@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ProductList from "../../components/Product/ProductList";
-import products from "../../../mockData/products";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks/redux";
+import { fetchAllProducts } from "../../redux/actionCreators/producrAction";
 
 function Main() {
+  const { products } = useAppSelector((state) => state.products);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAllProducts());
+  }, []);
+  
+  console.log("====================================");
+  console.log(products);
+  console.log("====================================");
   return (
     <main className='main'>
       <div className='container'>

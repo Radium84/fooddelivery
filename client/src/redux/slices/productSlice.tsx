@@ -1,6 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import categories from "../../../mockData/categories";
-import { TCategoryList, TProductList } from "types/productTypes";
+import { TProductList } from "types/productTypes";
 import products from "mockData/products";
 
 interface Products {
@@ -9,7 +8,7 @@ interface Products {
 }
 
 const initialState: Products = {
-  products: products,
+  products: [],
   productsByCategory: [],
 };
 
@@ -26,6 +25,10 @@ export const productSlice = createSlice({
       state.productsByCategory = [...state.products].filter(
         (el) => el.categoryId === action.payload
       );
+
+      console.log("====================================");
+      console.log(state.productsByCategory);
+      console.log("====================================");
       return state;
     },
   },

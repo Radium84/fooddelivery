@@ -1,13 +1,13 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import categories from "../../../mockData/categories";
-import { TCategoryList } from "types/productTypes";
+import { TCategory, TCategoryList } from "types/productTypes";
 
 interface Categories {
   categories: TCategoryList;
 }
 
 const initialState: Categories = {
-  categories: categories,
+  categories: [],
 };
 
 export const categorySlice = createSlice({
@@ -18,10 +18,14 @@ export const categorySlice = createSlice({
       state.categories = action.payload;
       return state;
     },
+    addCategory: (state, action: PayloadAction<TCategory>) => {
+      state.categories = [...state.categories, action.payload];
+      return state;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { getCategories } = categorySlice.actions;
+export const { getCategories, addCategory } = categorySlice.actions;
 
 export default categorySlice.reducer;

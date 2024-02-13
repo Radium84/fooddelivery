@@ -24,8 +24,13 @@
   .nav {
     display: flex;
     width: 50%;
-    justify-content: space-between;
+    justify-content: flex-start;
+    align-items: center;
     flex-wrap: wrap;
+    &__add {
+      font-size: 1.4rem;
+      margin-right: 2rem;
+    }
     &__item {
       color: #fff;
       font-size: 1.4rem;
@@ -53,7 +58,10 @@
     display: flex;
     gap: 2rem;
   }
-
+  .user-lk {
+    font-size: 2.8rem;
+    cursor: pointer;
+  }
   .user-icon {
     width: 5rem;
     height: 5rem;

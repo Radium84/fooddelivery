@@ -1,5 +1,5 @@
 type TCategory = {
-  id: number;
+  id?: number;
   name: string;
   endpointName: string;
   description: string;
@@ -8,7 +8,7 @@ type TCategory = {
 type TCategoryList = TCategory[];
 
 type TProduct = {
-  id: number;
+  id?: number;
   name: string;
   categoryId: number;
   composition: string;

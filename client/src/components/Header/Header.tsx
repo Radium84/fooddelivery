@@ -1,13 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 import "./header.scss";
-import { useAppSelector } from "../../redux/hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks/redux";
+import { useDispatch } from "react-redux";
+import { fetchCategory } from "../../redux/actionCreators/categoryAction";
+import HeaderNavList from "./HeaderNavList/HeaderNavList";
 
-function Header() {
+type HeaderProps = {
+  isLoggedIn: boolean;
+  onModal: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+function Header({ onModal}: HeaderProps) {
   const navigate = useNavigate();
-  const { categories } = useAppSelector((state) => state.categories);
+  const { users } = useAppSelector((state) => state.users);
   const userId = 1;
+  const name = users.firstname;
+  const roleId = users.firstname
   const headerNavigate = (path: string) => {
     navigate(path);
   };
@@ -16,18 +26,22 @@ function Header() {
     <header className='header'>
       <div className='container'>
         <div className='header__logo' onClick={() => headerNavigate("/")}></div>
-        <nav className='nav'>
-          {categories.map((item) => (
-            <div className='nav__item' key={item.id}>
-              {item.name}
-            </div>
-          ))}
-        </nav>
+        <HeaderNavList onModal={onModal} />
         <div className='header__user-panel user-panel'>
           <div className='search-icon user-panel__icon'></div>
-          <div
-            className='user-icon user-panel__icon'
-            onClick={() => headerNavigate(`/lk/${userId}`)}></div>
+          <div>
+            {roleId ? (
+              <div
+                className='user-lk'
+                onClick={() => headerNavigate(`/lk/${users.id}`)}>
+                {name}
+              </div>
+            ) : (
+              <div
+                className='user-icon user-panel__icon'
+                onClick={() => headerNavigate(`/auth/signIn`)}></div>
+            )}
+          </div>
           <div
             className='cart-icon user-panel__icon'
             onClick={() => headerNavigate(`/${userId}/cart`)}></div>
