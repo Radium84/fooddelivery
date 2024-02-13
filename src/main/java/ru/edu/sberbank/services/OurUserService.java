@@ -12,6 +12,7 @@ import ru.edu.sberbank.entity.Product;
 import ru.edu.sberbank.entity.Role;
 import ru.edu.sberbank.entity.dto.OurUserRegisterDTO;
 import ru.edu.sberbank.entity.dto.OurUserResponseDTO;
+import ru.edu.sberbank.repository.AuthRepository;
 import ru.edu.sberbank.repository.OurUserRepository;
 import ru.edu.sberbank.repository.RoleRepository;
 
@@ -25,12 +26,17 @@ public class OurUserService {
     private final OurUserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AuthRepository authRepository;
 
     @Autowired
-    public OurUserService(OurUserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+    public OurUserService(OurUserRepository userRepository,
+                          RoleRepository roleRepository,
+                          PasswordEncoder passwordEncoder,
+                          AuthRepository authRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.authRepository = authRepository;
     }
 
     @Transactional
@@ -77,6 +83,12 @@ public class OurUserService {
         // Преобразование OurUser в OurUserResponseDTO
         return toDTO(user);
     }
+
+    public OurUser findOurUserByAuth(Auth auth) {
+        return userRepository.findByAuth(auth);
+    }
+
+
     private OurUserResponseDTO toDTO(OurUser user) {
         OurUserResponseDTO dto = new OurUserResponseDTO();
         dto.setId(user.getId());
