@@ -6,14 +6,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import ru.edu.sberbank.entity.Order;
 import ru.edu.sberbank.entity.dto.OrderRequestDTO;
 import ru.edu.sberbank.entity.dto.OrderResponseDTO;
 import ru.edu.sberbank.services.OrderService;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/orders")
