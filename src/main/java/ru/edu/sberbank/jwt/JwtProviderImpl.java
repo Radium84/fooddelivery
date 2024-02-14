@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 @Component
 @Log
-public class JwtProviderImpl implements JwtProvider{
+public class JwtProviderImpl implements JwtProvider {
 
     //@Value("${app.jwt.secret}")
     private final String JWT_SECRET;
@@ -101,12 +101,9 @@ public class JwtProviderImpl implements JwtProvider{
         }
 
         //return !claims.getExpiration().before(new Date())
-        if (claims.getExpiration().before(new Date())) {
-            return false;
-        }
-
-        return true;
+        return !claims.getExpiration().before(new Date());
     }
+
     public Claims extractClaims(HttpServletRequest request) {
         log.info("extractClaims JWT: " + JWT_SECRET);
         log.info("extractClaims JWT_EXPIRATION_IN_MS: " + JWT_EXPIRATION_IN_MS);

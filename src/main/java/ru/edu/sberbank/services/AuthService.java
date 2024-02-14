@@ -1,6 +1,5 @@
 package ru.edu.sberbank.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +21,7 @@ public class AuthService {
         return authRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
     }
+
     @Transactional(readOnly = true)
     public Boolean isAdmin(String username) {
         Optional<Auth> authOptional = authRepository.findByUsername(username);

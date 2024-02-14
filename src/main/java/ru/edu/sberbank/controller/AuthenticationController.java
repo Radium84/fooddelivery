@@ -1,6 +1,7 @@
 package ru.edu.sberbank.controller;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.java.Log;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import ru.edu.sberbank.services.OurUserService;
 @RestController
 @RequestMapping("/api/authentication")
 @AllArgsConstructor
+@Log
 public class AuthenticationController {
     private final OurUserService ourUserService;
     private final AuthenticationService authenticationService;

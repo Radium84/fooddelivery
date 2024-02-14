@@ -1,6 +1,7 @@
 package ru.edu.sberbank.controller;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import ru.edu.sberbank.services.OurUserService;
 
 @RestController
 @RequestMapping("/api/users")
+@Log
 public class OurUserController {
 
     private final OurUserService ourUserService;

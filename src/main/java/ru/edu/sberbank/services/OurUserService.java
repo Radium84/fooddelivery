@@ -1,8 +1,7 @@
 package ru.edu.sberbank.services;
 
-import jakarta.persistence.EntityNotFoundException;
+import lombok.AllArgsConstructor;
 import org.hibernate.Hibernate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,33 +11,23 @@ import ru.edu.sberbank.entity.Product;
 import ru.edu.sberbank.entity.Role;
 import ru.edu.sberbank.entity.dto.OurUserRegisterDTO;
 import ru.edu.sberbank.entity.dto.OurUserResponseDTO;
-import ru.edu.sberbank.repository.AuthRepository;
+import ru.edu.sberbank.exceptions.ResourceNotFoundException;
 import ru.edu.sberbank.repository.OurUserRepository;
 import ru.edu.sberbank.repository.RoleRepository;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
+@AllArgsConstructor
 public class OurUserService {
 
 
     private final OurUserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
-    private final AuthRepository authRepository;
 
-    @Autowired
-    public OurUserService(OurUserRepository userRepository,
-                          RoleRepository roleRepository,
-                          PasswordEncoder passwordEncoder,
-                          AuthRepository authRepository) {
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.authRepository = authRepository;
-    }
 
     @Transactional
     public OurUser registerUser(OurUserRegisterDTO userDTO) {
@@ -75,7 +64,8 @@ public class OurUserService {
     @Transactional(readOnly = true)
     public OurUserResponseDTO getUserById(Long id) {
         OurUser user = userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User not found with id: " + id));
 
         // После загрузки объекта пользователя из базы данных инициализируем список избранных продуктов
         Hibernate.initialize(user.getFavoriteProducts());
@@ -84,8 +74,9 @@ public class OurUserService {
         return toDTO(user);
     }
 
-    public Optional<OurUser> findOurUserByAuth(Auth auth) {
-        return userRepository.findByAuth(auth);
+    public OurUser findOurUserByAuth(Auth auth) {
+        return userRepository.findByAuth(auth).orElseThrow(() ->
+                new ResourceNotFoundException("User not found with username: " + auth.getUsername()));
     }
 
 
