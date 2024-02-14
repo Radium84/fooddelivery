@@ -24,7 +24,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Auth auth = authService.findAuthByUsername(username);
-        OurUser ourUser = ourUserService.findOurUserByAuth(auth);
+        OurUser ourUser = ourUserService.findOurUserByAuth(auth).get();
 
         Set<GrantedAuthority> authorities = auth.getRoles().stream()
                 .map(role -> SecurityUtil.convertToAuthority(role.getName()))

@@ -18,6 +18,7 @@ import ru.edu.sberbank.repository.RoleRepository;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OurUserService {
@@ -84,7 +85,7 @@ public class OurUserService {
         return toDTO(user);
     }
 
-    public OurUser findOurUserByAuth(Auth auth) {
+    public Optional<OurUser> findOurUserByAuth(Auth auth) {
         return userRepository.findByAuth(auth);
     }
 
