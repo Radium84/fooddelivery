@@ -12,12 +12,12 @@ type HeaderProps = {
   onModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-function Header({ onModal}: HeaderProps) {
+function Header({ onModal }: HeaderProps) {
   const navigate = useNavigate();
   const { user } = useAppSelector((state) => state.user);
   const userId = 1;
   const name = user.firstname;
-  const roleId = user.firstname
+  const roleId = user.firstname;
   const headerNavigate = (path: string) => {
     navigate(path);
   };
@@ -45,6 +45,9 @@ function Header({ onModal}: HeaderProps) {
           <div
             className='cart-icon user-panel__icon'
             onClick={() => headerNavigate(`/${userId}/cart`)}></div>
+          <div
+            className='logout-icon user-panel__icon'
+            onClick={() => headerNavigate(`/`)}></div>
         </div>
       </div>
     </header>

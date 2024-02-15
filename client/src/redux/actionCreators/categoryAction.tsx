@@ -28,6 +28,7 @@ export const postCategory = (payload: TCategory) => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify(payload),
       });
       const category: TCategory = await response.json();
