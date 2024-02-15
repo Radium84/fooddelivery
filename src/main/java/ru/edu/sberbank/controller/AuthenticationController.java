@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.edu.sberbank.entity.Auth;
 import ru.edu.sberbank.entity.OurUser;
 import ru.edu.sberbank.entity.dto.OurUserRegisterDTO;
@@ -18,6 +15,7 @@ import ru.edu.sberbank.services.OurUserService;
 @RequestMapping("/api/authentication")
 @AllArgsConstructor
 @Log
+@CrossOrigin(origins = "http://localhost:3000")
 public class AuthenticationController {
     private final OurUserService ourUserService;
     private final AuthenticationService authenticationService;
