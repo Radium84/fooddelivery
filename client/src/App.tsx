@@ -23,7 +23,7 @@ function App() {
         <div className='page'>
           <Suspense fallback={<div>loading...</div>}>
             <Routes>
-              <Route path='/' element={<SignUp />}></Route>
+              <Route path='/' element={<MainAsync />}></Route>
               <Route path='/auth'>
                 <Route path='sign-up' element={<SignUp />}></Route>
                 <Route path='sign-in' element={<SignIn />}></Route>

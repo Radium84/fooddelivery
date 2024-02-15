@@ -46,7 +46,7 @@ export const fetchSignUp = (userData: TUserFormData) => {
   console.log("====================================");
   return async function (dispatch: AppDispatch) {
     try {
-      const response = await fetch(`${HOST}/authentication/sign-up`, {
+      const response = await fetch(`http://localhost:8080/api/auth/sign-up`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -57,7 +57,7 @@ export const fetchSignUp = (userData: TUserFormData) => {
       localStorage.setItem("token", user.token);
       dispatch(signUpUser(user));
     } catch (error) {
-      console.log(error);
+      console.log(error, error.message);
     }
   };
 };
