@@ -9,8 +9,7 @@ import java.util.Set;
 @Entity
 @Table(name = "auth")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class Auth {
 
     @Id
