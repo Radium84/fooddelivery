@@ -1,0 +1,98 @@
+.header {
+  font-family: "Montserrat";
+  padding: 4.5rem 0;
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__logo {
+    background-image: url("../../assets/images/page/Logo.png");
+    width: 17rem;
+    height: 3rem;
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    transition: 0.4s;
+    &:hover {
+      transform: scale(0.9);
+    }
+  }
+
+  .nav {
+    display: flex;
+    width: 50%;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    &__add {
+      font-size: 1.4rem;
+      margin-right: 2rem;
+    }
+    &__item {
+      color: #fff;
+      font-size: 1.4rem;
+      line-height: 2.8rem;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: 0.4s;
+      margin-right: 1rem;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  .header__userPanel {
+    display: flex;
+  }
+
+  .user-panel {
+    display: flex;
+    gap: 2rem;
+  }
+  .user-lk {
+    font-size: 2.8rem;
+    cursor: pointer;
+  }
+  .user-icon {
+    width: 5rem;
+    height: 5rem;
+    cursor: pointer;
+  }
+
+  .user-panel__icon {
+    width: 3rem;
+    height: 3rem;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: 0.4s;
+    &:hover {
+      transform: scale(0.8);
+    }
+  }
+
+  .search-icon {
+    background-image: url("../../assets/images/icons/search-icon.png");
+  }
+
+  .user-icon {
+    background-image: url("../../assets/images/icons/lk.png");
+  }
+
+  .cart-icon {
+    background-image: url("../../assets/images/icons/cart.png");
+  }
+
+  .logout-icon {
+    background-image: url("../../assets/images/icons/log_out.svg");
+  }
+}

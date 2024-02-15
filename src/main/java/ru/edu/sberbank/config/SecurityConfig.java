@@ -35,6 +35,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+<<<<<<< HEAD:server/main/java/ru/edu/sberbank/config/SecurityConfig.java
+                .cors().and()  // Включаем поддержку CORS и используем конфигурацию по умолчанию для всех эндпоинтов
+                .csrf().disable() // Отключаем CSRF защиту
+                .authorizeHttpRequests((authorize) -> authorize
+                        .anyRequest().permitAll()) // Разрешаем все запросы без аутентификации
+                .httpBasic(Customizer.withDefaults()); // Включаем HTTP Basic аутентификацию (если требуется)
+=======
                 .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sessionManagement -> sessionManagement
@@ -54,13 +61,28 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/users/*").hasAuthority("ROLE_USER")
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults());
+>>>>>>> master:src/main/java/ru/edu/sberbank/config/SecurityConfig.java
         return http.build();
+    }
+
+    @Bean
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration().applyPermitDefaultValues();
+        config.setAllowCredentials(true); // Если вам нужно поддерживать куки сессий / авторизации
+        config.addAllowedOriginPattern("*"); // Разрешаем все источники
+        config.addAllowedHeader("*"); // Разрешаем все заголовки
+        config.addAllowedMethod("*"); // Разрешаем все методы запросов
+        source.registerCorsConfiguration("/**", config); // Применяем конфигурацию ко всем путям
+        return new CorsFilter(source);
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+<<<<<<< HEAD:server/main/java/ru/edu/sberbank/config/SecurityConfig.java
+=======
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
@@ -83,4 +105,5 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         return http.getSharedObject(AuthenticationManagerBuilder.class).build();
     }
+>>>>>>> master:src/main/java/ru/edu/sberbank/config/SecurityConfig.java
 }
