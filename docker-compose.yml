@@ -30,6 +30,12 @@ services:
       - C:/DockerVolume:/var/lib/postgresql/data
     networks:
       - backend
-
+  client:
+    build: ./client
+    container_name: client_fooddelivery
+    ports:
+      - '3000:3000'
+    stdin_open: true
+    tty: true
 networks:
   backend:
