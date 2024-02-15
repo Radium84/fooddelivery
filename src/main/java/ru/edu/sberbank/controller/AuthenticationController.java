@@ -12,15 +12,14 @@ import ru.edu.sberbank.services.AuthenticationService;
 import ru.edu.sberbank.services.OurUserService;
 
 @RestController
-@RequestMapping("/api/authentication")
+@RequestMapping("/api/auth")
 @AllArgsConstructor
 @Log
-@CrossOrigin(origins = "http://localhost:3000")
 public class AuthenticationController {
     private final OurUserService ourUserService;
     private final AuthenticationService authenticationService;
 
-    @PostMapping("sign-in")
+    @PostMapping("/sign-in")
     public ResponseEntity<?> signIn(@RequestBody Auth auth) {
         return new ResponseEntity<>(authenticationService.signInAndReturnJwt(auth), HttpStatus.OK);
     }

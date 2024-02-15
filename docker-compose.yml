@@ -27,7 +27,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - C:/DockerVolume:/var/lib/postgresql/data
+      - D:/DockerVolume:/var/lib/postgresql/data
     networks:
       - backend
   client:
