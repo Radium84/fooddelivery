@@ -1,6 +1,7 @@
 package ru.edu.sberbank.controller;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/categories")
+@Log
 public class CategoryController {
 
     private final CategoryService categoryService;
@@ -33,9 +35,8 @@ public class CategoryController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Category> getCategoryById(@PathVariable Long id) {
-        return categoryService.findCategoryById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        Category category =  categoryService.findCategoryById(id);
+        return ResponseEntity.ok(category);
     }
 
     @PostMapping

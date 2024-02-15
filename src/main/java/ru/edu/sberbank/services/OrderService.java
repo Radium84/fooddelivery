@@ -2,6 +2,7 @@ package ru.edu.sberbank.services;
 
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.edu.sberbank.entity.Order;
@@ -10,6 +11,7 @@ import ru.edu.sberbank.entity.OurUser;
 import ru.edu.sberbank.entity.Product;
 import ru.edu.sberbank.entity.dto.OrderRequestDTO;
 import ru.edu.sberbank.entity.dto.OrderResponseDTO;
+import ru.edu.sberbank.exceptions.ResourceNotFoundException;
 import ru.edu.sberbank.repository.OrderItemRepository;
 import ru.edu.sberbank.repository.OrderRepository;
 import ru.edu.sberbank.repository.OurUserRepository;
@@ -19,25 +21,13 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
+@AllArgsConstructor
 public class OrderService {
 
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
     private final ProductRepository productRepository;
-    private final ProductService productService;
     private final OurUserRepository ourUserRepository;
-
-
-    public OrderService(OrderRepository orderRepository, OrderItemRepository orderItemRepository,
-                        ProductRepository productRepository, ProductService productService,
-                        OurUserRepository ourUserRepository) {
-        this.orderRepository = orderRepository;
-        this.orderItemRepository = orderItemRepository;
-        this.productRepository = productRepository;
-        this.productService = productService;
-        this.ourUserRepository = ourUserRepository;
-
-    }
 
 
     @Transactional
@@ -47,9 +37,10 @@ public class OrderService {
     }
 
     @Transactional
-    public Optional<OrderResponseDTO> getOrderById(Long orderId) {
-        return orderRepository.findById(orderId)
-                .map(this::convertToOrderResponseDTO);
+    public OrderResponseDTO getOrderById(Long orderId) {
+        Order orderResponseDTO = orderRepository.findById(orderId).orElseThrow(() ->
+                new ResourceNotFoundException("User not found with username: " + orderId));
+        return convertToOrderResponseDTO(orderResponseDTO);
     }
 
     public OrderResponseDTO updateOrder(OrderRequestDTO cartItemDTO) {

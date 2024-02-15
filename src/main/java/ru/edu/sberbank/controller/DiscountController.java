@@ -1,5 +1,6 @@
 package ru.edu.sberbank.controller;
 
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/discounts")
+@Log
 public class DiscountController {
 
     private final DiscountService discountService;
@@ -32,9 +34,8 @@ public class DiscountController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Discount> getDiscountById(@PathVariable Long id) {
-        return discountService.getDiscountById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        Discount discount = discountService.getDiscountById(id);
+        return ResponseEntity.ok(discount);
     }
     @PostMapping
     public ResponseEntity<Discount> createDiscount(@RequestBody Discount discount) {

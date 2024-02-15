@@ -46,4 +46,10 @@ public class OurUser {
     @JoinColumn(name = "auth_id", referencedColumnName = "id")
     private Auth auth; // добавленное поле для связи с записью Auth
 
+    @Transient // не создаем поле в таблице
+    private String token;
+    @Transient
+    private Boolean isAdmin;
+
+
 }

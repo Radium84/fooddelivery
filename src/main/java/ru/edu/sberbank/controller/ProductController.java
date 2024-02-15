@@ -1,5 +1,6 @@
 package ru.edu.sberbank.controller;
 
+import lombok.extern.java.Log;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")
+@Log
 public class ProductController {
 
     private final ProductService productService;
@@ -29,9 +31,8 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ProductResponseDTO> getProductById(@PathVariable Long id) {
-        return productService.getProductById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        ProductResponseDTO productResponseDTO = productService.getProductById(id);
+        return ResponseEntity.ok(productResponseDTO);
     }
 
     @PostMapping

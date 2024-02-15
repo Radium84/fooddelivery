@@ -1,6 +1,7 @@
 package ru.edu.sberbank.controller;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/orders")
+@Log
 public class OrderController {
 
     private final OrderService orderService;
@@ -32,9 +34,9 @@ public class OrderController {
 
     @GetMapping("/{id}")
     public ResponseEntity<OrderResponseDTO> getOrderById(@PathVariable Long id) {
-        return orderService.getOrderById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        OrderResponseDTO orderResponseDTO = orderService.getOrderById(id);
+        return ResponseEntity.ok(orderResponseDTO);
+
     }
 
     @PostMapping

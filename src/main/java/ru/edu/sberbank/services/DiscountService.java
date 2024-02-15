@@ -4,10 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.edu.sberbank.entity.Discount;
+import ru.edu.sberbank.exceptions.ResourceNotFoundException;
 import ru.edu.sberbank.repository.DiscountRepository;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class DiscountService {
@@ -25,8 +26,9 @@ public class DiscountService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<Discount> getDiscountById(Long id) {
-        return discountRepository.findById(id);
+    public Discount getDiscountById(Long id) {
+        return discountRepository.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException("Discount not found with username: " + id));
     }
     @Transactional
     public Discount createDiscount(Discount discount) {
