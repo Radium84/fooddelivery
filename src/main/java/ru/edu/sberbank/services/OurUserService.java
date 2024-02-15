@@ -27,7 +27,7 @@ public class OurUserService {
     private final OurUserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
-
+    private final AuthService authService;
 
     @Transactional
     public OurUser registerUser(OurUserRegisterDTO userDTO) {
@@ -37,11 +37,11 @@ public class OurUserService {
         ourUser.setLastname(userDTO.getLastname());
         ourUser.setAddress(userDTO.getAddress());
         ourUser.setBirthday(userDTO.getBirthday());
-
         Auth auth = createAuth(userDTO.getUsername(), userDTO.getPassword());
-
         ourUser.setAuth(auth);
+        ourUser.setIsAdmin(authService.isAdmin(userDTO.getUsername()));
         return userRepository.save(ourUser);
+
     }
 
     private Auth createAuth(String username, String password) {
