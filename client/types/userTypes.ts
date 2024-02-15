@@ -1,18 +1,16 @@
 import { TProductList } from "./productTypes";
 
-type TUser = {
-  id: number;
+type TUserFormData = {
   firstname: string;
   middlename?: string;
   lastname: string;
   address: string;
   birthday: string;
-  favoriteProducts?: TProductList;
   username: string;
   password: string;
 };
 
-type TUserSignIn = {
+type TUser = {
   id: number;
   firstname: string;
   middlename?: string;
@@ -21,6 +19,8 @@ type TUserSignIn = {
   birthday: string;
   favoriteProducts?: null | number[];
   auth: TAuth;
+  token: string;
+  isAdmin: boolean;
 };
 
 type TAuth = {
@@ -47,4 +47,4 @@ type TRole = {
 
 type TUserList = TUser[];
 
-export { TUser, TUserList, TUserSignIn };
+export { TUser, TUserList, TUserFormData };

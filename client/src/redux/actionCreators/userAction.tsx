@@ -1,7 +1,7 @@
-import { HOST } from "src/constants/constants";
+import { HOST } from "../../constants/constants";
 import { AppDispatch } from "../store";
-import { TUser } from "types/userTypes";
-import { signInUser } from "../slices/userSlice";
+import { TUser, TUserFormData } from "types/userTypes";
+import { logOutUser, signInUser, signUpUser } from "../slices/userSlice";
 
 export const fetchSignIn = () => {
   return function (dispatch: AppDispatch) {
@@ -25,11 +25,47 @@ export const fetchSignIn = () => {
           },
         ],
       },
+      token: "ddd",
+      isAdmin: false,
     };
-    console.log("====================================");
-    console.log("actionCreator");
-    console.log("====================================");
     dispatch(signInUser(user));
+    // try {
+    //   const response = await fetch(`${HOST}/products`, {
+    //     method: "GET",
+    //   });
+    //   const user: TUser = await response.json();
+    // } catch (error) {
+    //   console.log(error);
+    // }
+  };
+};
+
+export const fetchSignUp = (userData: TUserFormData) => {
+  console.log("====================================");
+  console.log(JSON.stringify(userData));
+  console.log("====================================");
+  return async function (dispatch: AppDispatch) {
+    try {
+      const response = await fetch(`${HOST}/authentication/sign-up`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+      const user: TUser = await response.json();
+      localStorage.setItem("token", user.token);
+      dispatch(signUpUser(user));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const fetchLogOut = () => {
+  return function (dispatch: AppDispatch) {
+    localStorage.removeItem("token");
+    dispatch(logOutUser());
     // try {
     //   const response = await fetch(`${HOST}/products`, {
     //     method: "GET",

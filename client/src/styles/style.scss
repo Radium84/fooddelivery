@@ -84,7 +84,13 @@ body {
 .page {
   position: relative;
 }
-
+.link {
+  text-decoration: underline;
+  cursor: pointer;
+  &:hover {
+    text-decoration: none;
+  }
+}
 @media (min-width: 600px) {
   html {
     font-size: 10px;

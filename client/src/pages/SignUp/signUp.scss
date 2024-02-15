@@ -1,0 +1,51 @@
+.sign-up {
+  .container {
+    display: flex;
+    justify-content: center;
+  }
+  .form {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+  .form__header {
+    font-size: 3.4rem;
+    margin-bottom: 3.4rem;
+  }
+
+  .form__name {
+  }
+  .form__firstname {
+  }
+  .form__item {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 2rem;
+
+    label {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      min-width: 20rem;
+    }
+    input {
+      font-size: 3rem;
+      color: black;
+    }
+  }
+  .form__middlename {
+  }
+  .form__lastname {
+  }
+  .form__address {
+  }
+  .form__birthday {
+  }
+  .form__username {
+  }
+  .form__password {
+  }
+  .form__btn {
+  }
+  .btn {
+  }
+}

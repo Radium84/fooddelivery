@@ -4,6 +4,7 @@ import { useAppDispatch } from "../../redux/hooks/redux";
 import { useNavigate } from "react-router-dom";
 import { signInUser } from "../../redux/slices/userSlice";
 import { fetchSignIn } from "../../redux/actionCreators/userAction";
+import { NavLink } from "react-router-dom";
 
 function SignIn() {
   const dispatch = useAppDispatch();
@@ -15,14 +16,13 @@ function SignIn() {
 
   function handleSubmit(e: React.SyntheticEvent) {
     // Prevent the browser from reloading the page
-    console.log("====================================");
-    console.log("comp");
-    console.log("====================================");
     e.preventDefault();
     dispatch(fetchSignIn());
     navigate("/");
   }
-
+  const handleNavigate = (path: string) => {
+    navigate(path);
+  };
   const handleValue = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement;
     setUserSignIn((prev) => ({ ...prev, [target.name]: target.value }));
@@ -59,6 +59,15 @@ function SignIn() {
             <button type='submit' className='btn'>
               Войти
             </button>
+
+            <div className='sign-up-link'>
+              <div className='sign-up-link__text'> Нет аккаунта?</div>
+              <div
+                onClick={() => handleNavigate("/auth/sign-up")}
+                className='link sign-up-link__text'>
+                Зарегистрироваться
+              </div>
+            </div>
           </div>
         </form>
       </div>

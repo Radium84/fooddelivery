@@ -7,6 +7,7 @@ import Header from "./components/Header/Header";
 import Cart from "./components/Cart/Cart";
 import CategoryModal from "./components/Modals/CategoryModal/CategoryModal";
 import SignIn from "./pages/SignIn/SignIn";
+import SignUp from "./pages/SignUp/SignUp";
 
 function App() {
   const [modalActive, setModalActive] = useState(false);
@@ -22,10 +23,11 @@ function App() {
         <div className='page'>
           <Suspense fallback={<div>loading...</div>}>
             <Routes>
-              <Route path='/' element={<MainAsync />}></Route>
-              <Route path='/auth/signIn' element={<SignIn />}></Route>
-              <Route path='/auth/signUp' element={<MainAsync />}></Route>
-              <Route path='/' element={<MainAsync />}></Route>
+              <Route path='/' element={<SignUp />}></Route>
+              <Route path='/auth'>
+                <Route path='sign-up' element={<SignUp />}></Route>
+                <Route path='sign-in' element={<SignIn />}></Route>
+              </Route>
               <Route path='/:categoryName' element={<MainAsync />}></Route>
               <Route path='/lk/:id' element={<PersonalAccountAsync />}></Route>
               <Route path='/:id/cart' element={<Cart />}></Route>
