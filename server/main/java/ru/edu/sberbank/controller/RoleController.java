@@ -1,5 +1,6 @@
 package ru.edu.sberbank.controller;
 
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/roles")
+@Log
 public class RoleController {
 
     private final RoleService roleService;
@@ -30,8 +32,7 @@ public class RoleController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Role> getRoleById(@PathVariable Long id) {
-        return roleService.getRoleById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        Role role = roleService.getRoleById(id);
+        return ResponseEntity.ok(role);
     }
 }

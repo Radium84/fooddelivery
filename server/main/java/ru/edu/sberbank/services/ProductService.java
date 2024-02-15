@@ -1,6 +1,5 @@
 package ru.edu.sberbank.services;
 
-import jakarta.persistence.EntityNotFoundException;
 import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,10 +7,10 @@ import ru.edu.sberbank.entity.Discount;
 import ru.edu.sberbank.entity.Product;
 import ru.edu.sberbank.entity.dto.ProductRequestDTO;
 import ru.edu.sberbank.entity.dto.ProductResponseDTO;
+import ru.edu.sberbank.exceptions.ResourceNotFoundException;
 import ru.edu.sberbank.repository.ProductRepository;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,15 +36,15 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<ProductResponseDTO> getProductById(Long id) {
-        return productRepository.findById(id).map(this::convertToResponseDTO);
+    public ProductResponseDTO getProductById(Long id) {
+        return productRepository.findById(id).map(this::convertToResponseDTO).orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + id));
     }
 
     public ProductResponseDTO convertToResponseDTO(Product product) {
         ProductResponseDTO productResponseDTO = new ProductResponseDTO();
         if (product.getIsDiscount()) {
-            Optional<Discount> discountValue = discountService.getDiscountById(product.getDiscount().getId());
-            discountValue.ifPresent(discount -> productResponseDTO.setCalculatedPrice((100 - discount.getValue()) * product.getPrice() / 100));
+            Discount discountValue = discountService.getDiscountById(product.getDiscount().getId());
+            productResponseDTO.setCalculatedPrice((100 - discountValue.getValue()) * product.getPrice() / 100);
 
         } else {
             productResponseDTO.setCalculatedPrice(product.getPrice());
@@ -65,7 +64,7 @@ public class ProductService {
     @Transactional
     public Product updateProduct(Long id, ProductRequestDTO productReqDTO) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Product not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + id));
         mapRequestToEntity(productReqDTO, product);
 
         return productRepository.save(product);
@@ -94,7 +93,7 @@ public class ProductService {
     private void mapRequestToEntity(ProductRequestDTO productRequestDTO, Product product) {
         product.setName(productRequestDTO.getName());
         var category = categoryService.findCategoryById(productRequestDTO.getCategoryId());
-        category.ifPresent(product::setCategory);
+        product.setCategory(category);
         product.setComposition(productRequestDTO.getComposition());
         product.setDescription(productRequestDTO.getDescription());
         product.setPrice(productRequestDTO.getPrice());
@@ -102,7 +101,7 @@ public class ProductService {
         product.setIsDiscount(isDiscount);
         if (isDiscount) {
             var discount = discountService.getDiscountById(productRequestDTO.getDiscountId());
-            discount.ifPresent(product::setDiscount);
+            product.setDiscount(discount);
         }
         Hibernate.initialize(product.getUsersWhoFavorited());
 
