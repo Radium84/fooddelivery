@@ -42,7 +42,8 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf((csrf) -> csrf.disable())
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/auth/sign-up").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/auth/sign-in").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/api/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/discounts", "/api/products", "/api/categories").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/discounts/*", "/api/products/*", "/api/categories/*").permitAll()
@@ -55,7 +56,6 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/users/*").hasAuthority("ROLE_USER")
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults());
-
         return http.build();
     }
 
