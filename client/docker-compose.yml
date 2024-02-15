@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  react-app:
+    build: .
+    ports:
+      - "3000:3000" # Подставьте порт, на котором работает ваше React приложение
+    networks:
+      - frontend # Создайте отдельную сеть для фронтенда, если это необходимо
+
+  app:
+    build: ../
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=mypassword
+    depends_on:
+      - db
+    networks:
+      - backend
+
+  db:
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=mypassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - D:/DockerVolume:/var/lib/postgresql/data
+    networks:
+      - backend
+
+networks:
+  backend:
+  frontend: # Добавьте, если решили использовать

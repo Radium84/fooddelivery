@@ -1,0 +1,15 @@
+FROM node:14
+WORKDIR /app
+COPY package*.json ./
+COPY . .
+# Соберите приложение для продакшена
+RUN npm run build
+
+# Установите сервер для статических файлов
+RUN npm install -g serve
+
+# Задайте порт, который будет прослушивать контейнер
+EXPOSE 3000
+
+# Запустите приложение
+CMD ["serve", "-s", "build", "-l", "3000"]

@@ -20,7 +20,6 @@
     "url": "https://github.com/Radium84/fooddelivery/issues"
   },
   "homepage": "https://github.com/Radium84/fooddelivery#readme",
-  "proxy": "http://localhost:8080",
   "devDependencies": {
     "@types/node": "^20.11.13",
     "@types/react": "^18.2.52",
