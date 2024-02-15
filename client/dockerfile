@@ -1,15 +1,8 @@
-FROM node:14
+FROM node:14-alpine
 WORKDIR /app
-COPY package*.json ./
+COPY ./package*.json ./
 COPY . .
-# Соберите приложение для продакшена
-RUN npm run build
-
-# Установите сервер для статических файлов
-RUN npm install -g serve
-
-# Задайте порт, который будет прослушивать контейнер
+RUN npm install
+RUN npm run build:dev
 EXPOSE 3000
-
-# Запустите приложение
-CMD ["serve", "-s", "build", "-l", "3000"]
+CMD ["npm", "start"]
