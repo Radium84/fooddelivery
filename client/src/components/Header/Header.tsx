@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { fetchCategory } from "../../redux/actionCreators/categoryAction";
 import HeaderNavList from "./HeaderNavList/HeaderNavList";
 import { logOutUser } from "../../redux/slices/userSlice";
+import { TOrderItem } from "types/orderTypes";
 
 type HeaderProps = {
   isLoggedIn: boolean;
@@ -15,7 +16,11 @@ type HeaderProps = {
 
 function Header({ onModal }: HeaderProps) {
   const { orderItemsList } = useAppSelector((state) => state.order);
-  // const total = order.reduce((prev, next) => )
+  // let total = [{ quantity: 1 }, { quantity: 2 }, { quantity: 3 }].reduce(
+  //   (sum, current) => sum[quantity] + current[quantity],
+  //   0
+  // );
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { user, isLoggedIn } = useAppSelector((state) => state.user);

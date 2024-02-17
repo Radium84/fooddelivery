@@ -11,20 +11,23 @@ import { NavigateFunction } from "react-router";
 
 export const fetchUser = () => {
   const userData = JSON.parse(localStorage.getItem("user"));
-  const { id, token } = userData;
+
   return async function (dispatch: AppDispatch) {
-    try {
-      const response = await fetch(`${HOST}/users/${id}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const user: TUser = await response.json();
-      dispatch(getUser(user));
-    } catch (error) {
-      console.log(error, error.message);
+    if (userData) {
+      const { id, token } = userData;
+      try {
+        const response = await fetch(`${HOST}/users/${id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const user: TUser = await response.json();
+        dispatch(getUser(user));
+      } catch (error) {
+        console.log(error, error.message);
+      }
     }
   };
 };

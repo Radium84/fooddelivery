@@ -46,13 +46,10 @@ export const orderSlice = createSlice({
       console.log(orderItemToRemove);
       console.log("====================================");
       if (orderItemToRemove !== -1) {
-        state.orderItemsList = [...state.orderItemsList].splice(
+        const item = state.orderItemsList.splice(
           orderItemToRemove,
           1
         );
-        console.log("====================================");
-        console.log(state.orderItemsList);
-        console.log("====================================");
       }
       return state;
     },
