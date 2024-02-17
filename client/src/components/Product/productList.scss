@@ -16,38 +16,28 @@
     background-color: #ffffff16;
     border: 1px solid #ffffff2a;
     position: relative;
-    width: 35rem;
-    max-width: 30vw;
     display: flex;
-    flex-direction: column;
     &__content {
       margin-bottom: 1.5rem;
     }
-
     &__image {
       background-image: url("../../assets/images/page/image1.jpg");
-      height: 15rem;
-      width: 100%;
       background-repeat: no-repeat;
       background-position: center;
-      margin-bottom: 3rem;
     }
-
     &__title {
       font-size: 3.2rem;
       font-weight: normal;
       margin-bottom: 1.5rem;
     }
-
     &__discount-label {
       position: absolute;
-      background-color: #fdbf05;
+      background-color: #fb7a3e;
       padding: 0.5rem 1rem;
       border-radius: 1.4rem 0.5rem;
       top: 0.3rem;
       left: 0.3rem;
     }
-
     &__description {
       font-size: 1.6rem;
       font-weight: normal;
@@ -63,8 +53,72 @@
     &__purchase-block {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       margin-top: auto;
-      align-items: flex-end;
+    }
+    &_vertical {
+      width: 35rem;
+      max-width: 30vw;
+      flex-direction: column;
+
+      .product-card {
+        &__image {
+          height: 15rem;
+          width: 100%;
+          margin-bottom: 3rem;
+        }
+      }
+    }
+
+    &_horisontal {
+      width: 100%;
+      max-width: 50%;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      .product-card {
+        &__content {
+          margin-bottom: 0;
+          justify-self: flex-start;
+        }
+
+        &__image {
+          height: 15rem;
+          width: 30%;
+          margin-bottom: 0rem;
+        }
+
+        &__description {
+          display: none;
+        }
+
+        &__composition {
+          display: none;
+        }
+
+        &__title {
+          align-self: flex-start;
+        }
+
+        &__purchase-block {
+          display: flex;
+          flex-direction: column;
+          flex-wrap: wrap;
+          max-width: 30%;
+          justify-content: center;
+          align-items: center;
+          margin-top: auto;
+          gap: 2rem;
+          .price-block__quantity {
+            order: 3;
+            flex: 100% 1 1;
+          }
+
+          .product-card__add-to-cart-btn {
+            display: none;
+          }
+        }
+      }
     }
   }
 

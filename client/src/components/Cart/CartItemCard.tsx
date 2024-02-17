@@ -1,25 +1,20 @@
-import { TProduct } from "types/productTypes";
-import { useState, ChangeEvent, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks/redux";
-import {
-  addToOrder,
-  createOrder,
-  removeFromOrder,
-} from "../../redux/slices/orderSlice";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks/redux";
+import { addToOrder, removeFromOrder } from "../../redux/slices/orderSlice";
+import { TProduct } from "types/productTypes";
 
-type TProductCard = {
+type TCartItemProps = {
   product: TProduct;
-  isHorisontal: boolean;
-  isShop: boolean;
+  quantity: number;
 };
 
-function ProductCard(props: TProductCard) {
+function CartItem(props: TCartItemProps) {
+  const { product, quantity } = props;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { user } = useAppSelector((state) => state.user);
-  const [isPicked, setIsPicked] = useState(false);
-  const [counter, setCounter] = useState(1);
+  const [counter, setCounter] = useState(quantity);
   const {
     name,
     composition,
@@ -29,19 +24,9 @@ function ProductCard(props: TProductCard) {
     isDiscount,
     id,
   } = props.product;
-  const { isHorisontal, isShop } = props;
+
   const [summaryPrice, setSummaryPrice] = useState(price);
   const [discountPrice, setDiscountPrice] = useState(calculatedPrice);
-
-  const handlePick = () => {
-    setIsPicked(true);
-    dispatch(
-      createOrder({
-        userId: user.id,
-        orderArray: [{ productId: id, quantity: counter }],
-      })
-    );
-  };
 
   const increase = () => {
     setCounter(counter + 1);
@@ -53,7 +38,6 @@ function ProductCard(props: TProductCard) {
       setCounter(counter - 1);
       dispatch(addToOrder({ productId: id, quantity: counter - 1 }));
     } else if (counter === 1) {
-      setIsPicked(false);
       dispatch(removeFromOrder(id));
     }
   };
@@ -64,10 +48,7 @@ function ProductCard(props: TProductCard) {
   }, [counter]);
 
   return (
-    <li
-      className={`product-list__item product-card product-card_${
-        isHorisontal ? "horisontal" : "vertical"
-      }`}>
+    <li className={`product-list__item product-card product-card_horisontal`}>
       <div className='product-card__image'></div>
       <div className='product-card__content'>
         <h2 className='product-card__title'>{name}</h2>
@@ -88,11 +69,7 @@ function ProductCard(props: TProductCard) {
           </div>
           <div className='price-block__new-price'>{discountPrice} руб. </div>
         </div>
-        <div
-          className={`price-block__quantity ${
-            isShop && isPicked && counter > 0 ? "" : !isShop ? "" : "hidden"
-          }
-          `}>
+        <div className='price-block__quantity'>
           <button type='button' className='round-btn' onClick={decrease}>
             -
           </button>
@@ -101,7 +78,7 @@ function ProductCard(props: TProductCard) {
             +
           </button>
         </div>
-        {user ? (
+        {/* {user ? (
           <button
             className='product-card__add-to-cart-btn'
             type='button'
@@ -112,10 +89,10 @@ function ProductCard(props: TProductCard) {
             onClick={() => navigate("/auth/sign-in")}>
             Войдите для заказа
           </div>
-        )}
+        )} */}
       </div>
     </li>
   );
 }
 
-export default ProductCard;
+export default CartItem;

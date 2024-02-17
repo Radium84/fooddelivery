@@ -4,7 +4,7 @@ import { TOrder, TOrderItem } from "types/orderTypes";
 
 interface Order {
   userId: number;
-  orderItemsList: TOrderItem[] | [];
+  orderItemsList: TOrderItem[];
 }
 const initialState: Order = {
   userId: null,
