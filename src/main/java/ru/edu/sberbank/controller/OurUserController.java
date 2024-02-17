@@ -25,18 +25,14 @@ public class OurUserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<OurUserResponseDTO> getUserById(@PathVariable Long id) {
-        OurUserResponseDTO ourUser;
-        try {
-            ourUser = ourUserService.getUserById(id);
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        OurUserResponseDTO ourUser = ourUserService.getUserById(id);
         return ResponseEntity.ok(ourUser);
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<OurUserResponseDTO> updateUser(@PathVariable Long id, @RequestBody OurUserRegisterDTO userDTO) {
+        OurUserResponseDTO updatedUser = ourUserService.updateUser(id, userDTO);
+        return ResponseEntity.ok(updatedUser);
 
-    @PostMapping("/register")
-    public ResponseEntity<OurUser> registerUser(@RequestBody OurUserRegisterDTO userDTO) {
-        OurUser registeredUser = ourUserService.registerUser(userDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(registeredUser);
     }
+
 }
