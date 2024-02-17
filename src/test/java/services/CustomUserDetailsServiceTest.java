@@ -33,10 +33,9 @@ public class CustomUserDetailsServiceTest {
 
     @Test
     void loadUserByUsername_Success() {
-        // Входные данные
+
         String username = "testUser";
 
-        // Моки
         Auth mockAuth = new Auth();
         mockAuth.setUsername(username);
         mockAuth.setPassword("password");

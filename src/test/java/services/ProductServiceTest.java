@@ -27,14 +27,11 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class ProductServiceTest {
-    @Mock
-    private DiscountService discountService;
+
 
     @Mock
     private ProductRepository productRepository;
 
-    @Mock
-    private CategoryService categoryService;
 
     @InjectMocks
     private ProductService productService;
@@ -100,15 +97,9 @@ public class ProductServiceTest {
     }
     @Test
     void whenDeleteProductById_thenSuccess() {
-        // Дано
         Long productId = 1L;
-
         Mockito.doNothing().when(productRepository).deleteById(productId);
-
-        // Когда
         productService.deleteProductById(productId);
-
-        // Тогда
         Mockito.verify(productRepository, Mockito.times(1)).deleteById(productId);
     }
 
@@ -116,10 +107,6 @@ public class ProductServiceTest {
     void getProductById_WhenProductNotFound_ThrowsException() {
         long productId = 1L;
         when(productRepository.findById(productId)).thenReturn(Optional.empty());
-
-        // Выполняем вызов и ожидаем исключение
-        assertThrows(ResourceNotFoundException.class, () -> {
-            productService.getProductById(productId);
-        });
+        assertThrows(ResourceNotFoundException.class, () -> productService.getProductById(productId));
     }
 }
