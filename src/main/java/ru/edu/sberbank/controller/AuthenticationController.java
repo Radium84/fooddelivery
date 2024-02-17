@@ -25,7 +25,7 @@ public class AuthenticationController {
     }
     @PostMapping("/sign-up")
     public ResponseEntity<OurUser> registerUser(@RequestBody OurUserRegisterDTO userDTO) {
-        OurUser registeredUser = ourUserService.registerUser(userDTO);
+        OurUser registeredUser = ourUserService.createUser(userDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(registeredUser);
     }
 }

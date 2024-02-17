@@ -2,6 +2,7 @@ package ru.edu.sberbank.services;
 
 import lombok.AllArgsConstructor;
 import org.hibernate.Hibernate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,9 +21,15 @@ import java.util.List;
 
 
 @Service
-@AllArgsConstructor
 public class OurUserService {
 
+    @Autowired
+    public OurUserService(OurUserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, AuthService authService) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.authService = authService;
+    }
 
     private final OurUserRepository userRepository;
     private final RoleRepository roleRepository;
@@ -30,7 +37,7 @@ public class OurUserService {
     private final AuthService authService;
 
     @Transactional
-    public OurUser registerUser(OurUserRegisterDTO userDTO) {
+    public OurUser createUser(OurUserRegisterDTO userDTO) {
         OurUser ourUser = new OurUser();
         ourUser.setFirstname(userDTO.getFirstname());
         ourUser.setMiddlename(userDTO.getMiddlename());
@@ -41,6 +48,31 @@ public class OurUserService {
         ourUser.setAuth(auth);
         ourUser.setIsAdmin(authService.isAdmin(userDTO.getUsername()));
         return userRepository.save(ourUser);
+
+    }
+    @Transactional
+    public OurUserResponseDTO updateUser(Long id, OurUserRegisterDTO userDTO) {
+        OurUser user = userRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User not found with id: " + id));
+        user.setFirstname(userDTO.getFirstname());
+        user.setMiddlename(userDTO.getMiddlename());
+        user.setLastname(userDTO.getLastname());
+        user.setAddress(userDTO.getAddress());
+        user.setBirthday(userDTO.getBirthday());
+        boolean usernamePresent = userDTO.getUsername() != null && !userDTO.getUsername().trim().isEmpty();
+        boolean passwordPresent = userDTO.getPassword() != null && !userDTO.getPassword().trim().isEmpty();
+        if (usernamePresent && !passwordPresent) {
+            throw new IllegalArgumentException("Пароль должен быть указан, если задано имя пользователя.");
+        }
+        if (usernamePresent) {
+            Auth auth = createAuth(userDTO.getUsername(), userDTO.getPassword());
+            user.setAuth(auth);
+            // Здесь может понадобиться дополнительная логика по установке свойств ourUser в зависимости от Auth
+        }
+
+        OurUser savedUser = userRepository.save(user);
+        return toDTO(savedUser);
 
     }
 
@@ -73,7 +105,7 @@ public class OurUserService {
         // Преобразование OurUser в OurUserResponseDTO
         return toDTO(user);
     }
-
+    @Transactional(readOnly = true)
     public OurUser findOurUserByAuth(Auth auth) {
         return userRepository.findByAuth(auth).orElseThrow(() ->
                 new ResourceNotFoundException("User not found with username: " + auth.getUsername()));
