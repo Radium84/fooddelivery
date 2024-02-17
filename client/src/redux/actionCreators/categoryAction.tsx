@@ -18,9 +18,6 @@ export const fetchCategory = () => {
 };
 
 export const postCategory = (payload: TCategory) => {
-  console.log("====================================");
-  console.log("hey");
-  console.log("====================================");
   return async function (dispatch: AppDispatch) {
     try {
       const response = await fetch(`${HOST}/categories`, {

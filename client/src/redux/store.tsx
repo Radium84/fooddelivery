@@ -3,11 +3,13 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import categoriesReducer from "./slices/categorySlice";
 import productsReducer from "./slices/productSlice";
 import usersReducer from "./slices/userSlice";
+import ordesReducer from "./slices/orderSlice";
 
 const rootReducer = combineReducers({
   categories: categoriesReducer,
   products: productsReducer,
   user: usersReducer,
+  order: ordesReducer,
 });
 
 export const store = configureStore({

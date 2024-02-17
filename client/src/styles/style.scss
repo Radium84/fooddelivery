@@ -1,5 +1,6 @@
 @import "./fonts/fonts.scss";
 @import "./reset.scss";
+@import "./vars.scss";
 
 * {
   font-size: 62.5%;
@@ -24,11 +25,12 @@
 }
 
 body {
-  background-color: #0f0f11;
+  background-color: #233429;
 }
 
 .container {
-  max-width: 1500px;
+  width: 100%;
+  max-width: 90%;
   margin: 0 auto;
 }
 
@@ -83,7 +85,13 @@ body {
 
 .page {
   position: relative;
+  height: 100%;
+  width: 100%;
+  flex: 100% 1 1;
+  display: flex;
+  justify-content: center;
 }
+
 .link {
   text-decoration: underline;
   cursor: pointer;
@@ -91,8 +99,9 @@ body {
     text-decoration: none;
   }
 }
+
+html {
+  font-size: 10px;
+}
 @media (min-width: 600px) {
-  html {
-    font-size: 10px;
-  }
 }

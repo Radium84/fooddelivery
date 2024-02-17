@@ -14,10 +14,12 @@ type HeaderProps = {
 };
 
 function Header({ onModal }: HeaderProps) {
+  const { orderItemsList } = useAppSelector((state) => state.order);
+  // const total = order.reduce((prev, next) => )
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector((state) => state.user);
-
+  const { user, isLoggedIn } = useAppSelector((state) => state.user);
+  const [counter, setCounter] = useState(0);
   const handleNavigate = (path: string) => {
     navigate(path);
   };
@@ -33,7 +35,7 @@ function Header({ onModal }: HeaderProps) {
         <div className='header__logo' onClick={() => handleNavigate("/")}></div>
         <HeaderNavList onModal={onModal} />
         <div className='header__user-panel user-panel'>
-          {user ? (
+          {user && isLoggedIn ? (
             <>
               <div
                 className='user-lk'
@@ -42,7 +44,9 @@ function Header({ onModal }: HeaderProps) {
               </div>
               <div
                 className='cart-icon user-panel__icon'
-                onClick={() => handleNavigate(`/${user.id}/cart`)}></div>
+                onClick={() => handleNavigate(`/${user.id}/cart`)}>
+                <div className='cart-icon__quantity'>{counter}</div>
+              </div>
               <div
                 className='logout-icon user-panel__icon'
                 onClick={() => handleLogOut()}></div>

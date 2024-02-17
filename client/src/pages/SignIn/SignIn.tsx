@@ -17,7 +17,7 @@ function SignIn() {
   function handleSubmit(e: React.SyntheticEvent) {
     // Prevent the browser from reloading the page
     e.preventDefault();
-    dispatch(fetchSignIn());
+    dispatch(fetchSignIn(userSignIn));
     navigate("/");
   }
   const handleNavigate = (path: string) => {
@@ -48,7 +48,7 @@ function SignIn() {
           <div className='form__item form__endpoint'>
             <label htmlFor='password'>Пароль</label>
             <input
-              type='text'
+              type='password'
               id='password'
               name='password'
               value={userSignIn.password}

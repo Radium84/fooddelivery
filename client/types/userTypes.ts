@@ -10,6 +10,11 @@ type TUserFormData = {
   password: string;
 };
 
+type TUserAuth = {
+  username: string;
+  password: string;
+};
+
 type TUser = {
   id: number;
   firstname: string;
@@ -47,4 +52,4 @@ type TRole = {
 
 type TUserList = TUser[];
 
-export { TUser, TUserList, TUserFormData };
+export { TUser, TUserList, TUserFormData, TUserAuth };

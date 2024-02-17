@@ -23,7 +23,7 @@
     &__content {
       margin-bottom: 1.5rem;
     }
-    
+
     &__image {
       background-image: url("../../assets/images/page/image1.jpg");
       height: 15rem;
@@ -73,7 +73,20 @@
     flex-direction: column;
     gap: 1.5rem;
   }
+  .price-block__quantity {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    &.hidden {
+      display: none;
+    }
+  }
 
+  .quantity {
+    font-size: 2rem;
+    min-width: 4rem;
+    text-align: center;
+  }
   .price-block__old-price {
     font-size: 1.4rem;
     text-decoration: line-through;
@@ -93,5 +106,8 @@
     &:hover {
       transform: scale(0.9);
     }
+  }
+  .product-card__login {
+    font-size: 1.4rem;
   }
 }

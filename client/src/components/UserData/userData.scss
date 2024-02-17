@@ -1,0 +1,30 @@
+.user-data {
+  .form {
+    max-width: 50%;
+    margin-top: 5rem;
+  }
+  .form__item {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 2rem;
+    align-items: center;
+
+    label {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      min-width: 25rem;
+    }
+    input {
+      font-size: 3rem;
+      color: black;
+      padding: 1rem;
+    }
+    input.hidden {
+      display: none;
+    }
+  }
+  .form-buttons {
+    display: flex;
+    gap: 2rem;
+  }
+}

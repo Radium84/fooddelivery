@@ -10,16 +10,11 @@ function Main() {
   useEffect(() => {
     dispatch(fetchAllProducts());
   }, []);
-  
-  console.log("====================================");
-  console.log(products);
-  console.log("====================================");
+
   return (
     <main className='main'>
-      <div className='container'>
-        <h1 className='main__title'>Меню</h1>
-        <ProductList productsList={products} />
-      </div>
+      <h1 className='main__title'>Меню</h1>
+      <ProductList productsList={products} />
     </main>
   );
 }
