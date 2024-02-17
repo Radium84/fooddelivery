@@ -6,3 +6,6 @@ INSERT INTO auth (username, password) VALUES ('admin', '$2a$10$IkQC3d2pz/.rvj72/
 
 INSERT INTO auth_roles (auth_id, role_id) VALUES ((SELECT id FROM auth WHERE username='user'), (SELECT role_id FROM roles WHERE name='ROLE_USER'));
 INSERT INTO auth_roles (auth_id, role_id) VALUES ((SELECT id FROM auth WHERE username='admin'), (SELECT role_id FROM roles WHERE name='ROLE_ADMIN'));
+INSERT INTO our_users (firstname, middlename, lastname, address, birthday, auth_id)
+VALUES
+('John', 'Middleton', 'Doe', '123 Main St', '2000-01-01 00:00:00', (SELECT id FROM auth WHERE username='user'));

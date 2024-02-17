@@ -23,7 +23,6 @@ import java.util.List;
 @Service
 public class OurUserService {
 
-    @Autowired
     public OurUserService(OurUserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, AuthService authService) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -68,7 +67,6 @@ public class OurUserService {
         if (usernamePresent) {
             Auth auth = createAuth(userDTO.getUsername(), userDTO.getPassword());
             user.setAuth(auth);
-            // Здесь может понадобиться дополнительная логика по установке свойств ourUser в зависимости от Auth
         }
 
         OurUser savedUser = userRepository.save(user);
@@ -98,6 +96,7 @@ public class OurUserService {
         OurUser user = userRepository.findById(id)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("User not found with id: " + id));
+
 
         // После загрузки объекта пользователя из базы данных инициализируем список избранных продуктов
         Hibernate.initialize(user.getFavoriteProducts());

@@ -8,7 +8,7 @@ import ru.edu.sberbank.entity.OurUser;
 
 import java.util.Optional;
 
-@Component
+@Repository
 public interface OurUserRepository extends JpaRepository<OurUser, Long> {
     Optional<OurUser> findByAuth(Auth auth);
 
