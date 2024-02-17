@@ -34,6 +34,8 @@ public class OurUserServiceTest {
 
     @Mock
     private PasswordEncoder passwordEncoder;
+    @Mock
+    private RoleRepository roleRepository;
 
     @Mock
     private AuthService authService;
