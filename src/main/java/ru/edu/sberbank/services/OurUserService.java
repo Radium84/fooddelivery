@@ -1,8 +1,6 @@
 package ru.edu.sberbank.services;
 
-import lombok.AllArgsConstructor;
 import org.hibernate.Hibernate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,7 +8,7 @@ import ru.edu.sberbank.entity.Auth;
 import ru.edu.sberbank.entity.OurUser;
 import ru.edu.sberbank.entity.Product;
 import ru.edu.sberbank.entity.Role;
-import ru.edu.sberbank.entity.dto.OurUserRegisterDTO;
+import ru.edu.sberbank.entity.dto.OurUserRequestDTO;
 import ru.edu.sberbank.entity.dto.OurUserResponseDTO;
 import ru.edu.sberbank.exceptions.ResourceNotFoundException;
 import ru.edu.sberbank.repository.OurUserRepository;
@@ -36,7 +34,7 @@ public class OurUserService {
     private final AuthService authService;
 
     @Transactional
-    public OurUser createUser(OurUserRegisterDTO userDTO) {
+    public OurUser createUser(OurUserRequestDTO userDTO) {
         OurUser ourUser = new OurUser();
         ourUser.setFirstname(userDTO.getFirstname());
         ourUser.setMiddlename(userDTO.getMiddlename());
@@ -50,7 +48,7 @@ public class OurUserService {
 
     }
     @Transactional
-    public OurUserResponseDTO updateUser(Long id, OurUserRegisterDTO userDTO) {
+    public OurUserResponseDTO updateUser(Long id, OurUserRequestDTO userDTO) {
         OurUser user = userRepository.findById(id)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("User not found with id: " + id));

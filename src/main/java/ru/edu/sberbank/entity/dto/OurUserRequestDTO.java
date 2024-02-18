@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 @RequiredArgsConstructor
-public class OurUserRegisterDTO {
+public class OurUserRequestDTO {
     private String firstname;
     private String middlename;
     private String lastname;
@@ -15,6 +15,5 @@ public class OurUserRegisterDTO {
     private LocalDateTime birthday;
     private String username;
     private String password;
-
 
 }

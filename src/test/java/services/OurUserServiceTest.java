@@ -1,16 +1,14 @@
 package services;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.edu.sberbank.entity.Auth;
 import ru.edu.sberbank.entity.OurUser;
 import ru.edu.sberbank.entity.Product;
-import ru.edu.sberbank.entity.dto.OurUserRegisterDTO;
+import ru.edu.sberbank.entity.dto.OurUserRequestDTO;
 import ru.edu.sberbank.entity.dto.OurUserResponseDTO;
 import ru.edu.sberbank.exceptions.ResourceNotFoundException;
 import ru.edu.sberbank.repository.OurUserRepository;
@@ -18,7 +16,6 @@ import ru.edu.sberbank.repository.RoleRepository;
 import ru.edu.sberbank.services.AuthService;
 import ru.edu.sberbank.services.OurUserService;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,7 +41,7 @@ public class OurUserServiceTest {
     private OurUserService userService;
     @Test
     void testCreateUser() {
-        OurUserRegisterDTO userDTO = new OurUserRegisterDTO();
+        OurUserRequestDTO userDTO = new OurUserRequestDTO();
         userDTO.setUsername("testUser");
         userDTO.setPassword("password");
         // Добавьте поля userDTO здесь
@@ -64,7 +61,7 @@ public class OurUserServiceTest {
     }
     @Test
     void testUpdateUser() {
-        OurUserRegisterDTO userDTO = new OurUserRegisterDTO();
+        OurUserRequestDTO userDTO = new OurUserRequestDTO();
         userDTO.setUsername("updatedUsername");
         userDTO.setPassword("updatedPassword");
         // Добавьте остальные поля userDTO здесь
