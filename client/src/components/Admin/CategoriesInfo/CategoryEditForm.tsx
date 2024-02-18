@@ -3,9 +3,16 @@ import React, { ChangeEvent, useRef, useState } from "react";
 import Button from "../../Button/Button";
 import { TCategory } from "types/productTypes";
 import { useAppDispatch } from "../../../redux/hooks/redux";
-import { putCategory } from "../../../redux/actionCreators/categoryAction";
+import {
+  putCategory,
+  deleteCategory,
+} from "../../../redux/actionCreators/categoryAction";
+import { log } from "console";
 
 function CategoryEditForm({ id, name, endpointName, description }: TCategory) {
+  console.log("====================================");
+  console.log({ id, name, endpointName, description });
+  console.log("====================================");
   const dispatch = useAppDispatch();
   const [isEdit, setIsEdit] = useState(false);
   const [category, setCategory] = useState({
@@ -28,6 +35,12 @@ function CategoryEditForm({ id, name, endpointName, description }: TCategory) {
     e.preventDefault();
     setIsEdit(!isEdit);
     dispatch(putCategory(category));
+  };
+
+  const handleDelete = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    setIsEdit(false);
+    dispatch(deleteCategory(category));
   };
 
   return (
@@ -95,7 +108,7 @@ function CategoryEditForm({ id, name, endpointName, description }: TCategory) {
             type='submit'
             classNames='delete-btn'
             text='Удалить'
-            action={handleEdit}
+            action={(e) => handleDelete(e)}
           />
         </div>
       </form>

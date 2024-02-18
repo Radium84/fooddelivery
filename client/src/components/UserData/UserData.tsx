@@ -54,7 +54,7 @@ function UserData() {
           />
         </div>
         <div className='form__item'>
-          <label htmlFor=''>{middlename}</label>
+          <label htmlFor=''>{middlename ? middlename : "Отчество"}</label>
           <input
             type='text'
             id='middlename'

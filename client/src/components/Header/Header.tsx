@@ -38,12 +38,10 @@ function Header() {
             <>
               <div
                 className='user-lk'
-                onClick={
-                  () => handleNavigate(`/admin/categories`)
-                  //   user?.isAdmin
-                  //   handleNavigate(`/admin/categories`)
-                  //     : handleNavigate(`/lk/${user.id}/userinfo`);
-                  // }
+                onClick={() =>
+                  user.isAdmin
+                    ? handleNavigate(`/admin/categories`)
+                    : handleNavigate(`/lk/${user.id}/userinfo`)
                 }>
                 {user.firstname}
               </div>

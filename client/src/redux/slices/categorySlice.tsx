@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import categories from "../../../mockData/categories";
 import { TCategory, TCategoryList } from "types/productTypes";
+import { log } from "console";
 
 interface Categories {
   categories: TCategoryList;
@@ -26,12 +27,27 @@ export const categorySlice = createSlice({
       const categoryItemToUpdate = [...state.categories].find(
         (el) => el.id === action.payload.id
       );
+      console.log(categoryItemToUpdate);
+
       if (categoryItemToUpdate) {
         state.categories.splice(
-          1,
           state.categories.indexOf(categoryItemToUpdate),
+          1,
           action.payload
         );
+      }
+      return state;
+    },
+
+    removeCategory: (state, action: PayloadAction<number>) => {
+      const categoryItemToRemove = [...state.categories].findIndex(
+        (el) => el.id === action.payload
+      );
+      console.log("====================================");
+      console.log(state.categories.splice(1, categoryItemToRemove));
+      console.log("====================================");
+      if (categoryItemToRemove) {
+        state.categories.splice(1, categoryItemToRemove);
       }
       return state;
     },
@@ -39,7 +55,7 @@ export const categorySlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { getCategories, addCategory, editcategory } =
+export const { getCategories, addCategory, editcategory, removeCategory } =
   categorySlice.actions;
 
 export default categorySlice.reducer;

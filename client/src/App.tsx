@@ -32,7 +32,7 @@ function App() {
           <div className='container'>
             <Suspense fallback={<div>loading...</div>}>
               <Routes>
-                <Route path='/' element={<CategoriesInfo />}></Route>
+                <Route path='/' element={<MainAsync />}></Route>
                 <Route path='/auth'>
                   <Route path='sign-up' element={<SignUp />}></Route>
                   <Route path='sign-in' element={<SignIn />}></Route>
