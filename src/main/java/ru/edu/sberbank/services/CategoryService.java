@@ -44,6 +44,7 @@ public class CategoryService {
                 .map(existingCategory -> {
                     existingCategory.setName(category.getName());
                     existingCategory.setDescription(category.getDescription());
+                    existingCategory.setEndpointName(category.getEndpointName());
                     return categoryRepository.save(existingCategory);
                 }).orElseThrow(() -> new EntityNotFoundException("Category with id " + id + " not found"));
     }

@@ -1,11 +1,9 @@
 package services;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.edu.sberbank.entity.Auth;
 import ru.edu.sberbank.entity.OurUser;
@@ -18,7 +16,7 @@ import ru.edu.sberbank.repository.RoleRepository;
 import ru.edu.sberbank.services.AuthService;
 import ru.edu.sberbank.services.OurUserService;
 
-import java.util.HashSet;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,11 +65,15 @@ public class OurUserServiceTest {
         OurUserRegisterDTO userDTO = new OurUserRegisterDTO();
         userDTO.setUsername("updatedUsername");
         userDTO.setPassword("updatedPassword");
+        userDTO.setFirstname("Ivan");
+        userDTO.setLastname("Ivanov");
+        userDTO.setAddress("Street");
+        LocalDateTime localDateTime = LocalDateTime.now();
+        userDTO.setBirthday(localDateTime);
         // Добавьте остальные поля userDTO здесь
 
         OurUser existingUser = new OurUser();
         existingUser.setId(1L);
-
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(existingUser));
         when(passwordEncoder.encode(anyString())).thenReturn("hashedUpdatedPassword");
         when(userRepository.save(any(OurUser.class))).thenAnswer(invocation -> invocation.getArgument(0));

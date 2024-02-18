@@ -19,6 +19,7 @@ public class AuthenticationController {
     private final OurUserService ourUserService;
     private final AuthenticationService authenticationService;
 
+
     @PostMapping("/sign-in")
     public ResponseEntity<?> signIn(@RequestBody Auth auth) {
         return new ResponseEntity<>(authenticationService.signInAndReturnJwt(auth), HttpStatus.OK);
@@ -26,6 +27,9 @@ public class AuthenticationController {
     @PostMapping("/sign-up")
     public ResponseEntity<OurUser> registerUser(@RequestBody OurUserRegisterDTO userDTO) {
         OurUser registeredUser = ourUserService.createUser(userDTO);
+        Auth auth = new Auth(userDTO.getUsername(),userDTO.getPassword());
+        String jwt = authenticationService.signInAndReturnJwt(auth).getToken();
+        registeredUser.setToken(jwt);
         return ResponseEntity.status(HttpStatus.CREATED).body(registeredUser);
     }
 }

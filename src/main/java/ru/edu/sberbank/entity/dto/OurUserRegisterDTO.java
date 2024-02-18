@@ -2,6 +2,7 @@ package ru.edu.sberbank.entity.dto;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import ru.edu.sberbank.entity.Product;
 
 import java.time.LocalDateTime;
 
@@ -15,6 +16,6 @@ public class OurUserRegisterDTO {
     private LocalDateTime birthday;
     private String username;
     private String password;
-
+    private Product product;
 
 }

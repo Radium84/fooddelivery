@@ -28,5 +28,8 @@ public class Auth {
     )
     private Set<Role> roles = new HashSet<>();
 
-
+    public Auth(String username, String password){
+        this.username = username;
+        this.password = password;
+    }
 }

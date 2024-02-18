@@ -1,14 +1,11 @@
 package ru.edu.sberbank.services;
 
-import lombok.AllArgsConstructor;
 import org.hibernate.Hibernate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.edu.sberbank.entity.Auth;
 import ru.edu.sberbank.entity.OurUser;
-import ru.edu.sberbank.entity.Product;
 import ru.edu.sberbank.entity.Role;
 import ru.edu.sberbank.entity.dto.OurUserRegisterDTO;
 import ru.edu.sberbank.entity.dto.OurUserResponseDTO;
@@ -17,7 +14,6 @@ import ru.edu.sberbank.repository.OurUserRepository;
 import ru.edu.sberbank.repository.RoleRepository;
 
 import java.util.Collections;
-import java.util.List;
 
 
 @Service
@@ -54,21 +50,47 @@ public class OurUserService {
         OurUser user = userRepository.findById(id)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("User not found with id: " + id));
-        user.setFirstname(userDTO.getFirstname());
+
+        if (userDTO.getFirstname() != null && !userDTO.getFirstname().trim().isEmpty()) {
+            user.setFirstname(userDTO.getFirstname());
+        } else {
+            throw new IllegalArgumentException("Имя пользователя не может быть пустым");
+        }
+
         user.setMiddlename(userDTO.getMiddlename());
-        user.setLastname(userDTO.getLastname());
-        user.setAddress(userDTO.getAddress());
-        user.setBirthday(userDTO.getBirthday());
+
+        if (userDTO.getLastname() != null && !userDTO.getLastname().trim().isEmpty()) {
+            user.setLastname(userDTO.getLastname());
+        } else {
+            throw new IllegalArgumentException("Фамилия пользователя не может быть пустой");
+        }
+
+        if (userDTO.getAddress() != null && !userDTO.getAddress().trim().isEmpty()) {
+            user.setAddress(userDTO.getAddress());
+        } else {
+            throw new IllegalArgumentException("Адресс пользователя не может быть пустым");
+        }
+
+        if (userDTO.getBirthday() != null) {
+            user.setBirthday(userDTO.getBirthday());
+        } else {
+            throw new IllegalArgumentException("День Рождения пользователя не может быть пустым");
+        }
+
         boolean usernamePresent = userDTO.getUsername() != null && !userDTO.getUsername().trim().isEmpty();
         boolean passwordPresent = userDTO.getPassword() != null && !userDTO.getPassword().trim().isEmpty();
+
         if (usernamePresent && !passwordPresent) {
             throw new IllegalArgumentException("Пароль должен быть указан, если задано имя пользователя.");
         }
+
         if (usernamePresent) {
             Auth auth = createAuth(userDTO.getUsername(), userDTO.getPassword());
             user.setAuth(auth);
         }
-
+        if(userDTO.getProduct()!=null){
+            user.getFavoriteProducts().add(userDTO.getProduct());
+        }
         OurUser savedUser = userRepository.save(user);
         return toDTO(savedUser);
 
@@ -96,10 +118,7 @@ public class OurUserService {
         OurUser user = userRepository.findById(id)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("User not found with id: " + id));
-
-
-        // После загрузки объекта пользователя из базы данных инициализируем список избранных продуктов
-        Hibernate.initialize(user.getFavoriteProducts());
+       // Hibernate.initialize(user.getFavoriteProducts());
 
         // Преобразование OurUser в OurUserResponseDTO
         return toDTO(user);
@@ -119,18 +138,12 @@ public class OurUserService {
         dto.setLastname(user.getLastname());
         dto.setAddress(user.getAddress());
         dto.setBirthday(user.getBirthday());
-
-        // Получение и установка username из сущности Auth, связанной с пользователем
         if (user.getAuth() != null) {
             dto.setUsername(user.getAuth().getUsername());
+            var isAdmin = authService.isAdmin(user.getAuth().getUsername());
+            dto.setIsAdmin(isAdmin);
         }
-        if (user.getFavoriteProducts() != null) {
-            List<Long> favoriteProductNames = user.getFavoriteProducts().stream()
-                    .map(Product::getId)
-                    .toList();
-            dto.setFavoriteProducts(favoriteProductNames);
-        }
-
+        dto.setFavoriteProducts(user.getFavoriteProducts());
         return dto;
     }
 }
