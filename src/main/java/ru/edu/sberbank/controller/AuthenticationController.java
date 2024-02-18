@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.edu.sberbank.entity.Auth;
 import ru.edu.sberbank.entity.OurUser;
-import ru.edu.sberbank.entity.dto.OurUserRequestDTO;
+import ru.edu.sberbank.entity.dto.OurUserRegisterDTO;
 import ru.edu.sberbank.services.AuthenticationService;
 import ru.edu.sberbank.services.OurUserService;
 
@@ -25,7 +25,7 @@ public class AuthenticationController {
         return new ResponseEntity<>(authenticationService.signInAndReturnJwt(auth), HttpStatus.OK);
     }
     @PostMapping("/sign-up")
-    public ResponseEntity<OurUser> registerUser(@RequestBody OurUserRequestDTO userDTO) {
+    public ResponseEntity<OurUser> registerUser(@RequestBody OurUserRegisterDTO userDTO) {
         OurUser registeredUser = ourUserService.createUser(userDTO);
         Auth auth = new Auth(userDTO.getUsername(),userDTO.getPassword());
         String jwt = authenticationService.signInAndReturnJwt(auth).getToken();

@@ -2,6 +2,7 @@ package ru.edu.sberbank.entity.dto;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import ru.edu.sberbank.entity.Product;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,7 +16,7 @@ public class OurUserResponseDTO {
     private String lastname;
     private String address;
     private LocalDateTime birthday;
-    private List<Long> favoriteProducts;
+    private List<Product> favoriteProducts;
     private String username;
 
 

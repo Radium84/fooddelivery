@@ -8,7 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.edu.sberbank.entity.Auth;
 import ru.edu.sberbank.entity.OurUser;
 import ru.edu.sberbank.entity.Product;
-import ru.edu.sberbank.entity.dto.OurUserRequestDTO;
+import ru.edu.sberbank.entity.dto.OurUserRegisterDTO;
 import ru.edu.sberbank.entity.dto.OurUserResponseDTO;
 import ru.edu.sberbank.exceptions.ResourceNotFoundException;
 import ru.edu.sberbank.repository.OurUserRepository;
@@ -16,6 +16,7 @@ import ru.edu.sberbank.repository.RoleRepository;
 import ru.edu.sberbank.services.AuthService;
 import ru.edu.sberbank.services.OurUserService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,7 +42,7 @@ public class OurUserServiceTest {
     private OurUserService userService;
     @Test
     void testCreateUser() {
-        OurUserRequestDTO userDTO = new OurUserRequestDTO();
+        OurUserRegisterDTO userDTO = new OurUserRegisterDTO();
         userDTO.setUsername("testUser");
         userDTO.setPassword("password");
         // Добавьте поля userDTO здесь
@@ -61,14 +62,18 @@ public class OurUserServiceTest {
     }
     @Test
     void testUpdateUser() {
-        OurUserRequestDTO userDTO = new OurUserRequestDTO();
+        OurUserRegisterDTO userDTO = new OurUserRegisterDTO();
         userDTO.setUsername("updatedUsername");
         userDTO.setPassword("updatedPassword");
+        userDTO.setFirstname("Ivan");
+        userDTO.setLastname("Ivanov");
+        userDTO.setAddress("Street");
+        LocalDateTime localDateTime = LocalDateTime.now();
+        userDTO.setBirthday(localDateTime);
         // Добавьте остальные поля userDTO здесь
 
         OurUser existingUser = new OurUser();
         existingUser.setId(1L);
-
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(existingUser));
         when(passwordEncoder.encode(anyString())).thenReturn("hashedUpdatedPassword");
         when(userRepository.save(any(OurUser.class))).thenAnswer(invocation -> invocation.getArgument(0));
