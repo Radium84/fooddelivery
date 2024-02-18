@@ -3,10 +3,12 @@ import { TUser } from "types/userTypes";
 
 interface User {
   user: null | TUser;
+  isError: boolean;
   isLoggedIn: boolean;
 }
 const initialState: User = {
   user: null,
+  isError: false,
   isLoggedIn: false,
 };
 
@@ -22,7 +24,7 @@ export const userSlice = createSlice({
 
     signUpUser: (state, action: PayloadAction<TUser>) => {
       state.user = action.payload;
-      state.isLoggedIn = false;
+      state.isLoggedIn = true;
       return state;
     },
 

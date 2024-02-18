@@ -53,10 +53,7 @@ export const fetchSignIn = (userData: TUserAuth) => {
   };
 };
 
-export const fetchSignUp = (
-  userData: TUserFormData,
-  navigate: NavigateFunction
-) => {
+export const fetchSignUp = (userData: TUserFormData) => {
   return async function (dispatch: AppDispatch) {
     try {
       const response = await fetch(`http://localhost:8080/api/auth/sign-up`, {
@@ -67,8 +64,9 @@ export const fetchSignUp = (
         body: JSON.stringify(userData),
       });
       const user: TUser = await response.json();
+      const { id, token } = user;
+      localStorage.setItem("user", JSON.stringify({ id, token }));
       dispatch(signUpUser(user));
-      navigate("/auth/sign-in");
     } catch (error) {
       console.log(error, error.message);
     }

@@ -1,15 +1,16 @@
 import { TProductList } from "types/productTypes";
 import ProductCard from "./ProductCard";
 import "./productList.scss";
+import { useAppSelector } from "src/redux/hooks/redux";
 
 type ProductListProps = {
-  productsList: TProductList;
+  products: TProductList;
 };
 
-function ProductList({ productsList }: ProductListProps) {
+function ProductList({ products }: ProductListProps) {
   return (
     <ul className='product-list'>
-      {productsList.map((el) => (
+      {products.map((el) => (
         <ProductCard
           product={el}
           key={el.id}

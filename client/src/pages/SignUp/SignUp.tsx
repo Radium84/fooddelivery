@@ -24,8 +24,9 @@ function SignUp() {
   });
 
   function handleSubmit(e: React.SyntheticEvent) {
-    dispatch(fetchSignUp(userSignUp, navigate));
+    dispatch(fetchSignUp(userSignUp));
     e.preventDefault();
+    navigate("/");
   }
 
   const handleValue = (e: ChangeEvent) => {

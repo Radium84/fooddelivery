@@ -13,7 +13,7 @@ function HeaderNavList() {
   const { categories } = useAppSelector((state) => state.categories);
 
   const showAllProducts = () => {
-    dispatch(fetchCategory());
+    navigate(`/`);
   };
 
   const showCategoryProducts = (id: number) => {

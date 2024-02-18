@@ -43,11 +43,8 @@ export const categorySlice = createSlice({
       const categoryItemToRemove = [...state.categories].findIndex(
         (el) => el.id === action.payload
       );
-      console.log("====================================");
-      console.log(state.categories.splice(1, categoryItemToRemove));
-      console.log("====================================");
       if (categoryItemToRemove) {
-        state.categories.splice(1, categoryItemToRemove);
+        state.categories.splice(categoryItemToRemove, 1);
       }
       return state;
     },

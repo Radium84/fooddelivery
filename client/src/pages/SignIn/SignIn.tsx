@@ -35,6 +35,7 @@ function SignIn() {
           onSubmit={(e) => handleSubmit(e)}
           className='sign-in__form modal-form form glass-bg'>
           <h2 className='form__header'>Авторизация</h2>
+          {/* <div className="error">Неверные данные входа!</div> */}
           <div className='form__name form__item'>
             <label htmlFor='username'>Имя</label>
             <input
