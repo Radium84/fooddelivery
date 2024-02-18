@@ -46,9 +46,6 @@ export const fetchSignIn = (userData: TUserAuth) => {
       const user: TUser = await response.json();
       const { id, token } = user;
       localStorage.setItem("user", JSON.stringify({ id, token }));
-      console.log("====================================");
-      console.log(user);
-      console.log("====================================");
       dispatch(signInUser(user));
     } catch (error) {
       console.log(error, error.message);

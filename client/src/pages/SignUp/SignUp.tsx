@@ -38,7 +38,6 @@ function SignUp() {
       <form
         onSubmit={(e) => handleSubmit(e)}
         className='modal-form form glass-bg'>
-        {/* <CloseButton action={onModal} /> */}
         <h2 className='form__header'>Регистрация</h2>
         <div className='form__item form__firstname'>
           <label htmlFor='firstname'>Имя*</label>

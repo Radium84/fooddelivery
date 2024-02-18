@@ -5,10 +5,12 @@ import { TOrder, TOrderItem } from "types/orderTypes";
 interface Order {
   userId: number;
   orderItemsList: TOrderItem[];
+  isSuccess: boolean;
 }
 const initialState: Order = {
   userId: null,
   orderItemsList: [],
+  isSuccess: false,
 };
 
 export const orderSlice = createSlice({
@@ -24,13 +26,16 @@ export const orderSlice = createSlice({
       return state;
     },
 
+    sendOrder: (state, action: PayloadAction<TOrder>) => {
+      state.userId = action.payload.userId;
+      state.orderItemsList = [];
+      return state;
+    },
+
     addToOrder: (state, action: PayloadAction<TOrderItem>) => {
       const orderItemToUpdate = [...state.orderItemsList].find(
         (el) => el.productId === action.payload.productId
       );
-      console.log("====================================");
-      console.log(action.payload);
-      console.log("====================================");
       if (orderItemToUpdate) {
         orderItemToUpdate.quantity = action.payload.quantity;
       }
@@ -42,15 +47,14 @@ export const orderSlice = createSlice({
         (el) => el.productId === action.payload
       );
 
-      console.log("====================================");
-      console.log(orderItemToRemove);
-      console.log("====================================");
       if (orderItemToRemove !== -1) {
-        const item = state.orderItemsList.splice(
-          orderItemToRemove,
-          1
-        );
+        const item = state.orderItemsList.splice(orderItemToRemove, 1);
       }
+      return state;
+    },
+
+    setSuccessOrder: (state, action: PayloadAction<boolean>) => {
+      state.isSuccess = action.payload;
       return state;
     },
 
@@ -67,6 +71,12 @@ export const orderSlice = createSlice({
   },
 });
 
-export const { createOrder, addToOrder, removeFromOrder } = orderSlice.actions;
+export const {
+  createOrder,
+  addToOrder,
+  removeFromOrder,
+  sendOrder,
+  setSuccessOrder,
+} = orderSlice.actions;
 
 export default orderSlice.reducer;

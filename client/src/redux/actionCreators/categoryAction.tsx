@@ -1,5 +1,9 @@
 import { TCategory, TCategoryList } from "types/productTypes";
-import { addCategory, getCategories } from "../slices/categorySlice";
+import {
+  addCategory,
+  editcategory,
+  getCategories,
+} from "../slices/categorySlice";
 import { AppDispatch } from "../store";
 import { HOST } from "../../constants/constants";
 
@@ -18,19 +22,48 @@ export const fetchCategory = () => {
 };
 
 export const postCategory = (payload: TCategory) => {
+  const userData = JSON.parse(localStorage.getItem("user"));
   return async function (dispatch: AppDispatch) {
-    try {
-      const response = await fetch(`${HOST}/categories`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-      const category: TCategory = await response.json();
-      dispatch(addCategory(category));
-    } catch (error) {
-      console.log("error", error);
+    if (userData) {
+      const { id, token } = userData;
+      try {
+        const response = await fetch(`${HOST}/categories`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(payload),
+        });
+        const category: TCategory = await response.json();
+        dispatch(addCategory(category));
+      } catch (error) {
+        console.log("error", error);
+      }
+    }
+  };
+};
+
+export const putCategory = (payload: TCategory) => {
+  const userData = JSON.parse(localStorage.getItem("user"));
+  return async function (dispatch: AppDispatch) {
+    if (userData) {
+      const { id, token } = userData;
+      const categoryId = payload.id;
+      try {
+        const response = await fetch(`${HOST}/categories/${categoryId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(payload),
+        });
+        const category: TCategory = await response.json();
+        dispatch(editcategory(category));
+      } catch (error) {
+        console.log("error", error);
+      }
     }
   };
 };

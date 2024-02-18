@@ -69,6 +69,9 @@ function ProductCard(props: TProductCard) {
         isHorisontal ? "horisontal" : "vertical"
       }`}>
       <div className='product-card__image'></div>
+      <div className='like'>
+        <img src='../../assets/images/icons/like.png' alt='' />
+      </div>
       <div className='product-card__content'>
         <h2 className='product-card__title'>{name}</h2>
         <div
@@ -77,6 +80,7 @@ function ProductCard(props: TProductCard) {
           }`}>
           Акция
         </div>
+
         <p className='product-card__description'>{description}</p>
         <p className='product-card__composition'>Состав: {composition}</p>
       </div>

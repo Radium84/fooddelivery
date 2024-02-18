@@ -9,23 +9,16 @@ import HeaderNavList from "./HeaderNavList/HeaderNavList";
 import { logOutUser } from "../../redux/slices/userSlice";
 import { TOrderItem } from "types/orderTypes";
 
-type HeaderProps = {
-  isLoggedIn: boolean;
-  onModal: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-function Header({ onModal }: HeaderProps) {
+function Header() {
   const { orderItemsList } = useAppSelector((state) => state.order);
-
+  const { user, isLoggedIn } = useAppSelector((state) => state.user);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const total = orderItemsList.reduce(
     (sum, current: TOrderItem) => sum + current.quantity,
     0
   );
 
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const { user, isLoggedIn } = useAppSelector((state) => state.user);
-  const [counter, setCounter] = useState(0);
   const handleNavigate = (path: string) => {
     navigate(path);
   };
@@ -39,13 +32,19 @@ function Header({ onModal }: HeaderProps) {
     <header className='header'>
       <div className='container'>
         <div className='header__logo' onClick={() => handleNavigate("/")}></div>
-        <HeaderNavList onModal={onModal} />
+        <HeaderNavList />
         <div className='header__user-panel user-panel'>
           {user && isLoggedIn ? (
             <>
               <div
                 className='user-lk'
-                onClick={() => handleNavigate(`/lk/${user.id}`)}>
+                onClick={
+                  () => handleNavigate(`/admin/categories`)
+                  //   user?.isAdmin
+                  //   handleNavigate(`/admin/categories`)
+                  //     : handleNavigate(`/lk/${user.id}/userinfo`);
+                  // }
+                }>
                 {user.firstname}
               </div>
               <div

@@ -1,9 +1,7 @@
 import "./categoryModal.scss";
 import { useAppDispatch } from "../../../redux/hooks/redux";
-import { ChangeEvent, FormEventHandler, useEffect, useState } from "react";
-import { log } from "console";
+import { ChangeEvent, useEffect, useState } from "react";
 import { postCategory } from "../../../redux/actionCreators/categoryAction";
-import { Navigate, useNavigate } from "react-router-dom";
 import CloseButton from "../../CloseButton/CloseButton";
 
 type CategoryModalProps = {
@@ -13,8 +11,6 @@ type CategoryModalProps = {
 };
 function CategoryModal(props: CategoryModalProps) {
   const { isActive, setActive, onModal } = props;
-
-  const navigate = useNavigate();
   const [category, setCategory] = useState({
     name: "",
     endpointName: "",
@@ -26,14 +22,13 @@ function CategoryModal(props: CategoryModalProps) {
     // Prevent the browser from reloading the page
     e.preventDefault();
     dispatch(postCategory(category));
-    navigate("/");
+    setActive(false);
   }
 
   const handleValue = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement;
     setCategory((prev) => ({ ...prev, [target.name]: target.value }));
   };
-
 
   useEffect(() => {
     setActive(isActive);
@@ -55,6 +50,7 @@ function CategoryModal(props: CategoryModalProps) {
               value={category.name}
               name='name'
               onChange={handleValue}
+              required
             />
           </div>
           <div className='form__item form__endpoint'>
@@ -65,6 +61,7 @@ function CategoryModal(props: CategoryModalProps) {
               name='endpointName'
               value={category.endpointName}
               onChange={handleValue}
+              required
             />
           </div>
           <div className='form__item form__description'>
@@ -75,6 +72,7 @@ function CategoryModal(props: CategoryModalProps) {
               value={category.description}
               name='description'
               onChange={handleValue}
+              required
             />
           </div>
           <div className='form__btn'>

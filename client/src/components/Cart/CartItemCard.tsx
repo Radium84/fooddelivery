@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/redux";
 import { addToOrder, removeFromOrder } from "../../redux/slices/orderSlice";
 import { TProduct } from "types/productTypes";
-
+import "../Product/productList.scss";
 type TCartItemProps = {
   product: TProduct;
   quantity: number;

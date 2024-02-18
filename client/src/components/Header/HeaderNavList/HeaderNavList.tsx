@@ -5,20 +5,12 @@ import { fetchCategoryProducts } from "../../../redux/actionCreators/producrActi
 import { log } from "console";
 import { useNavigate } from "react-router-dom";
 
-type HeaderNavListProps = {
-  onModal: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-function HeaderNavList({ onModal }: HeaderNavListProps) {
+function HeaderNavList() {
   const navigate = useNavigate();
   //const [isVisible, setIsVisible] = useState(isAdmin);
 
   const dispatch = useAppDispatch();
   const { categories } = useAppSelector((state) => state.categories);
-
-  const openAddModal = () => {
-    onModal(true);
-  };
 
   const showAllProducts = () => {
     dispatch(fetchCategory());
@@ -35,9 +27,6 @@ function HeaderNavList({ onModal }: HeaderNavListProps) {
 
   return (
     <nav className='nav'>
-      <button className={`nav__add btn`} onClick={() => openAddModal()}>
-        Добавить
-      </button>
       <div className='nav__item' onClick={showAllProducts}>
         Главная
       </div>

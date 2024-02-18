@@ -13,14 +13,12 @@ import { fetchUser } from "./redux/actionCreators/userAction";
 import UserData from "./components/UserData/UserData";
 import Orders from "./components/Orders/Orders";
 import Favorites from "./components/Favorites/Favorites";
+import CategoriesInfo from "./components/Admin/CategoriesInfo/CategoriesInfo";
+import DiscountsInfo from "./components/Admin/DiscountsInfo/DiscountsInfo";
+import ProductsInfo from "./components/Admin/ProductsInfo/ProductsInfo";
 
 function App() {
-  const [modalActive, setModalActive] = useState(false);
   const dispatch = useAppDispatch();
-
-  const changeModalState = () => {
-    setModalActive(!modalActive);
-  };
 
   useEffect(() => {
     dispatch(fetchUser());
@@ -29,30 +27,30 @@ function App() {
   return (
     <BrowserRouter>
       <div className='app'>
-        <Header onModal={changeModalState} isLoggedIn={false} />
+        <Header />
         <div className='page'>
           <div className='container'>
             <Suspense fallback={<div>loading...</div>}>
               <Routes>
-                <Route path='/' element={<MainAsync />}></Route>
+                <Route path='/' element={<CategoriesInfo />}></Route>
                 <Route path='/auth'>
                   <Route path='sign-up' element={<SignUp />}></Route>
                   <Route path='sign-in' element={<SignIn />}></Route>
                 </Route>
                 <Route path='/:categoryName' element={<MainAsync />}></Route>
                 <Route path='/lk/:id' element={<PersonalAccountAsync />}>
-                  <Route index element={<UserData />}></Route>
+                  <Route path='userinfo' element={<UserData />}></Route>
                   <Route path='orders' element={<Orders />}></Route>
                   <Route path='favorites' element={<Favorites />}></Route>
+                </Route>
+                <Route path='/admin' element={<PersonalAccountAsync />}>
+                  <Route path='categories' element={<CategoriesInfo />}></Route>
+                  <Route path='discounts' element={<DiscountsInfo />}></Route>
+                  <Route path='products' element={<ProductsInfo />}></Route>
                 </Route>
                 <Route path='/:id/cart' element={<Cart />}></Route>
               </Routes>
             </Suspense>
-            <CategoryModal
-              isActive={modalActive}
-              setActive={setModalActive}
-              onModal={changeModalState}
-            />
           </div>
         </div>
       </div>
