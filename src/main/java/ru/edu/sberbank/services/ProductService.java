@@ -103,7 +103,7 @@ public class ProductService {
             var discount = discountService.getDiscountById(productRequestDTO.getDiscountId());
             product.setDiscount(discount);
         }
-        Hibernate.initialize(product.getUsersWhoFavorited());
+
 
     }
 

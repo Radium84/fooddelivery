@@ -42,9 +42,5 @@ public class Product {
     @JoinColumn(name = "discount_id")
     private Discount discount;
 
-    @ManyToMany(mappedBy = "favoriteProducts",fetch = FetchType.EAGER)
-    private List<OurUser> usersWhoFavorited;
-
-
 
 }

@@ -118,10 +118,7 @@ public class OurUserService {
         OurUser user = userRepository.findById(id)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("User not found with id: " + id));
-
-
-        // После загрузки объекта пользователя из базы данных инициализируем список избранных продуктов
-        Hibernate.initialize(user.getFavoriteProducts());
+       // Hibernate.initialize(user.getFavoriteProducts());
 
         // Преобразование OurUser в OurUserResponseDTO
         return toDTO(user);
@@ -143,6 +140,8 @@ public class OurUserService {
         dto.setBirthday(user.getBirthday());
         if (user.getAuth() != null) {
             dto.setUsername(user.getAuth().getUsername());
+            var isAdmin = authService.isAdmin(user.getAuth().getUsername());
+            dto.setIsAdmin(isAdmin);
         }
         dto.setFavoriteProducts(user.getFavoriteProducts());
         return dto;

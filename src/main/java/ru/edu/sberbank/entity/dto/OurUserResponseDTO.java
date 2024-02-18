@@ -18,6 +18,7 @@ public class OurUserResponseDTO {
     private LocalDateTime birthday;
     private List<Product> favoriteProducts;
     private String username;
+    private Boolean isAdmin;
 
 
 
